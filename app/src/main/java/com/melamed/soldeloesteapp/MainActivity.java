@@ -1,4 +1,4 @@
-package melamed.soldeloesteapp;
+package com.melamed.soldeloesteapp;
 
 
 import android.content.Intent;

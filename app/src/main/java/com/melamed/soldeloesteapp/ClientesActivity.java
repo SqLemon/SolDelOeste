@@ -1,10 +1,8 @@
-package melamed.soldeloesteapp;
+package com.melamed.soldeloesteapp;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Layout;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -71,16 +69,27 @@ public class ClientesActivity extends AppCompatActivity{
     }
 
     void getProductos(){
-        getProductosClass clase = new getProductosClass();
-        clase.setOnTaskCompletedListener(new getProductosClass.onTaskCompletedListener() {
-            @Override public void onTaskCompleted(getProductosClass.Result result) {
-                if(result == null) {
+        GetProductosClass clase = new GetProductosClass();
+        clase.setOnTaskCompletedListener(new GetProductosClass.onTaskCompletedListener() {
+            @Override public void onTaskCompleted(ProductList result) {
+                if(result.size() < 1) {
                     Snackbar.make(findViewById(R.id.clientes),"Error en la conexión.",Snackbar.LENGTH_SHORT).show();
                     return;
                 }
                 //setear valores del grid
 
-                String productos = result.getNombre();
+
+
+                //procesa productos devueltos, uno por uno
+                for(Producto p : result){
+                    //aca tenes los datos de cada producto
+                    int id = p.getId();
+                    String nombre = p.getNombre();
+                    String marca = p.getMarca();
+                    double precio = p.getPrecio();
+                    //TODO: usar datos, agregar a la lista qsy
+                }
+
 
             }
         });
