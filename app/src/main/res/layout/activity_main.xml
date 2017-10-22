@@ -27,14 +27,14 @@
         android:id="@+id/relativeLayout">
 
         <ImageView
-                android:id="@+id/dummyImg"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:contentDescription=""
-                app:srcCompat="@drawable/logo"
-                tools:ignore="ContentDescription"
-                tools:layout_editor_absoluteX="8dp"
-                tools:layout_editor_absoluteY="-102dp" />
+            android:id="@+id/dummyImg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription=""
+            app:srcCompat="@drawable/logo"
+            tools:ignore="ContentDescription"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="-102dp" />
 
 
         <android.support.design.widget.TextInputLayout
@@ -47,7 +47,11 @@
                 android:id="@+id/txbUser"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Usuario" />
+                android:autoText="false"
+                android:capitalize="none"
+                android:hint="Usuario"
+                android:inputType="textNoSuggestions|textVisiblePassword"
+                android:singleLine="true" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -62,20 +66,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Contraseña"
-                android:inputType="textPassword" />
+                android:inputType="textNoSuggestions|textPassword" />
 
         </android.support.design.widget.TextInputLayout>
 
-            <Button
-                android:id="@+id/btnLogin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/dummyLayout2"
-                android:textColor="#FFFFFF"
-                android:layout_marginTop="32dp"
-                android:elevation="4dp"
-                android:background="@color/colorPrimary"
-                android:text="@string/button" />
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/dummyLayout2"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="32dp"
+            android:elevation="4dp"
+            android:background="@color/colorPrimary"
+            android:text="@string/button" />
 
     </RelativeLayout>
 </RelativeLayout>

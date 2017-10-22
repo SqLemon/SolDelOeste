@@ -10,17 +10,17 @@ import android.widget.Button;
 import android.widget.GridView;
 
 
-public class ClientesActivity extends AppCompatActivity{
+public class ClientesActivity extends AppCompatActivity {
 
     GridView gridProds;
-    Button  btnList;
-    Button  btnSend;
-    Button  btnAdd;
-    Button  btnBack;
-    Button  btnDelete;
+    Button btnList;
+    Button btnSend;
+    Button btnAdd;
+    Button btnBack;
+    Button btnDelete;
     boolean delete = false;
 
-    String[] numbers = new String[] {
+    String[] numbers = new String[]{
             "A", "B", "C", "D", "E",
             "F", "G", "H", "I", "J",
             "K", "L", "M", "N", "O",
@@ -35,10 +35,10 @@ public class ClientesActivity extends AppCompatActivity{
 
         gridProds = (GridView) findViewById(R.id.gridProds);
         btnList = (Button) findViewById(R.id.btnList);
-        btnSend= (Button) findViewById(R.id.btnSend);
-        btnAdd= (Button) findViewById(R.id.btnAdd);
-        btnDelete =(Button) findViewById(R.id.btnDelete);
-        btnBack= (Button) findViewById(R.id.btnBack);
+        btnSend = (Button) findViewById(R.id.btnSend);
+        btnAdd = (Button) findViewById(R.id.btnAdd);
+        btnDelete = (Button) findViewById(R.id.btnDelete);
+        btnBack = (Button) findViewById(R.id.btnBack);
         getProductos();
 
         btnList.setOnClickListener(new View.OnClickListener() {
@@ -68,20 +68,20 @@ public class ClientesActivity extends AppCompatActivity{
         });
     }
 
-    void getProductos(){
+    void getProductos() {
         GetProductosClass clase = new GetProductosClass();
         clase.setOnTaskCompletedListener(new GetProductosClass.onTaskCompletedListener() {
-            @Override public void onTaskCompleted(ProductList result) {
-                if(result.size() < 1) {
-                    Snackbar.make(findViewById(R.id.clientes),"Error en la conexión.",Snackbar.LENGTH_SHORT).show();
+            @Override
+            public void onTaskCompleted(ProductList result) {
+                if (result.size() < 1) {
+                    Snackbar.make(findViewById(R.id.clientes), "Error en la conexión.", Snackbar.LENGTH_SHORT).show();
                     return;
                 }
                 //setear valores del grid
 
 
-
                 //procesa productos devueltos, uno por uno
-                for(Producto p : result){
+                for (Producto p : result) {
                     //aca tenes los datos de cada producto
                     int id = p.getId();
                     String nombre = p.getNombre();

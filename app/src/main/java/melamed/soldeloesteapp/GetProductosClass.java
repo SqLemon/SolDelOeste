@@ -1,7 +1,6 @@
 package melamed.soldeloesteapp;
 
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -13,16 +12,18 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
 
-public class GetProductosClass extends AsyncTask<Void, Void, ProductList> {
+class GetProductosClass extends AsyncTask<Void, Void, ProductList> {
     private URL url;
     private onTaskCompletedListener listener;
-    void setOnTaskCompletedListener(onTaskCompletedListener listener){ this.listener = listener;}
-    public interface onTaskCompletedListener{ void onTaskCompleted(ProductList result);}
+
+    void setOnTaskCompletedListener(onTaskCompletedListener listener) {
+        this.listener = listener;
+    }
+
+    interface onTaskCompletedListener {
+        void onTaskCompleted(ProductList result);
+    }
 
     //TODO: SI QUEREMOS ENVIAR UN PASS DE CONFIRMACION (post versión beta) descomentar todo lo comentado
     //private static final String pass = whatever; private String query;
@@ -33,12 +34,14 @@ public class GetProductosClass extends AsyncTask<Void, Void, ProductList> {
         execute();
     }
 
-    @Override protected void onPostExecute(ProductList result){
+    @Override
+    protected void onPostExecute(ProductList result) {
         super.onPostExecute(result);
         listener.onTaskCompleted(result);
     }
 
-    @Override protected ProductList doInBackground(Void... params) {
+    @Override
+    protected ProductList doInBackground(Void... params) {
         try {
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setReadTimeout(10000);
@@ -54,13 +57,13 @@ public class GetProductosClass extends AsyncTask<Void, Void, ProductList> {
             writer.close();
             os.close();*/
             BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
             String line;
-            while ((line = reader.readLine()) != null) sb.append(line + "\n");
+            while ((line = reader.readLine()) != null) sb.append(line).append("\n");
 
             ProductList result = new ProductList();
             JSONArray arr = new JSONArray(sb.toString());
-            for(int i = 0; i < arr.length(); i++) {
+            for (int i = 0; i < arr.length(); i++) {
                 JSONObject object = arr.getJSONObject(i);
                 int id = object.getInt("id");
                 String nombre = object.getString("nombre");

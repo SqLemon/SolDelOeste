@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -89,7 +88,7 @@
             android:layout_below="@id/dummyL3"
             android:layout_marginTop="16dp"
             android:textSize="18sp"
-            android:text="Precio: "/>
+            android:text="Precio: " />
 
         <TextView
             android:layout_width="wrap_content"
@@ -100,7 +99,7 @@
             android:id="@+id/lblProdPrecio"
             android:layout_below="@id/dummyL3"
             android:layout_alignParentEnd="true"
-            android:text="N/A"/>
+            android:text="N/A" />
 
 
     </RelativeLayout>

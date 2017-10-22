@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -26,23 +27,40 @@ public class LoginClass extends AsyncTask<Void, Void, LoginClass.Result> {
     public class Result {
         private String user, mail, pass;
         private int tipo;
-        Result(String user, String pass, String mail, int tipo){
+
+        Result(String user, String pass, String mail, int tipo) {
             this.user = user;
             this.pass = pass;
             this.mail = mail;
         }
 
-        String getUser(){return this.user;}
-        String getPass(){return this.pass;}
-        String getMail(){return this.mail;}
-        int getTipo(){ return this.tipo;}
+        String getUser() {
+            return this.user;
+        }
+
+        String getPass() {
+            return this.pass;
+        }
+
+        String getMail() {
+            return this.mail;
+        }
+
+        int getTipo() {
+            return this.tipo;
+        }
     }
 
-    void setOnTaskCompletedListener(onTaskCompletedListener listener){ this.listener = listener;}
-    public interface onTaskCompletedListener{ void onTaskCompleted(Result result);}
+    void setOnTaskCompletedListener(onTaskCompletedListener listener) {
+        this.listener = listener;
+    }
+
+    public interface onTaskCompletedListener {
+        void onTaskCompleted(Result result);
+    }
 
 
-    void login(String user, String pass) throws MalformedURLException{
+    void login(String user, String pass) throws MalformedURLException {
         this.user = user;
         this.pass = pass;
         query = new Uri.Builder()
@@ -53,12 +71,14 @@ public class LoginClass extends AsyncTask<Void, Void, LoginClass.Result> {
         execute();
     }
 
-    @Override protected void onPostExecute(Result v){
+    @Override
+    protected void onPostExecute(Result v) {
         super.onPostExecute(v);
         listener.onTaskCompleted(values);
     }
 
-    @Override protected LoginClass.Result doInBackground(Void... params) {
+    @Override
+    protected LoginClass.Result doInBackground(Void... params) {
         try {
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setReadTimeout(10000);
@@ -79,8 +99,8 @@ public class LoginClass extends AsyncTask<Void, Void, LoginClass.Result> {
             BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             StringBuffer sb = new StringBuffer();
             String line;
-            while ((line = reader.readLine()) != null){
-                sb.append(line +"\n");
+            while ((line = reader.readLine()) != null) {
+                sb.append(line + "\n");
             }
             String result = sb.toString();
 

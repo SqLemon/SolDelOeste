@@ -2,13 +2,6 @@ package melamed.soldeloesteapp;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
-
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
 
 public class Producto implements Parcelable {
     private int id;
@@ -16,23 +9,26 @@ public class Producto implements Parcelable {
     private String nombre;
     private String marca;
 
-    Producto(int id, String nombre, String marca, double precio){
+    Producto(int id, String nombre, String marca, double precio) {
         this.id = id;
         this.nombre = nombre;
         this.marca = marca;
         this.precio = precio;
     }
 
-    int getId(){
+    int getId() {
         return id;
     }
-    String getNombre(){
+
+    String getNombre() {
         return nombre;
     }
-    String getMarca(){
+
+    String getMarca() {
         return marca;
     }
-    double getPrecio(){
+
+    double getPrecio() {
         return precio;
     }
 
@@ -43,22 +39,28 @@ public class Producto implements Parcelable {
         marca = in.readString();
     }
 
-    @Override public int describeContents() {
-        return 0;
+    @Override
+    public int describeContents() {
+        return hashCode();
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
         dest.writeDouble(precio);
         dest.writeString(nombre);
         dest.writeString(marca);
     }
 
-    @SuppressWarnings("unused") public static final Parcelable.Creator<Producto> CREATOR = new Parcelable.Creator<Producto>() {
-        @Override public Producto createFromParcel(Parcel in) {
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Producto> CREATOR = new Parcelable.Creator<Producto>() {
+        @Override
+        public Producto createFromParcel(Parcel in) {
             return new Producto(in);
         }
-        @Override public Producto[] newArray(int size) {
+
+        @Override
+        public Producto[] newArray(int size) {
             return new Producto[size];
         }
     };
