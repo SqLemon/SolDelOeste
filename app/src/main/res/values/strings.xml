@@ -3,4 +3,15 @@
     <string name="contrase_a">\t Contraseña:</string>
     <string name="button">Entrar</string>
     <string name="usuario">\t Usuario:</string>
+    <string name="cantidad">Cantidad:</string>
+    <string name="agregar_uno">Agregar uno</string>
+    <string name="quitar_uno">Quitar uno</string>
+    <string name="back">back</string>
+    <string name="lista_de_compras">Lista de Compras</string>
+    <string name="borrar">borrar</string>
+    <string name="producto">Producto</string>
+    <string name="marca">Marca</string>
+    <string name="a_adir">Añadir</string>
+    <string name="ver_compra">Ver Compra</string>
+    <string name="enviar_pedido">Enviar Pedido</string>
 </resources>

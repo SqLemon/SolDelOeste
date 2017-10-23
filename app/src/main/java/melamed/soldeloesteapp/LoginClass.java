@@ -16,7 +16,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class LoginClass extends AsyncTask<Void, Void, LoginClass.Result> {
+class LoginClass extends AsyncTask<Void, Void, LoginClass.Result> {
     private Result values;
     private URL url;
     private String user;
@@ -24,7 +24,7 @@ public class LoginClass extends AsyncTask<Void, Void, LoginClass.Result> {
     private String query;
     private onTaskCompletedListener listener;
 
-    public class Result {
+    class Result {
         private String user, mail, pass;
         private int tipo;
 
@@ -55,7 +55,7 @@ public class LoginClass extends AsyncTask<Void, Void, LoginClass.Result> {
         this.listener = listener;
     }
 
-    public interface onTaskCompletedListener {
+    interface onTaskCompletedListener {
         void onTaskCompleted(Result result);
     }
 
@@ -97,10 +97,10 @@ public class LoginClass extends AsyncTask<Void, Void, LoginClass.Result> {
 
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
             String line;
             while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
+                sb.append(line).append("\n");
             }
             String result = sb.toString();
 
@@ -108,9 +108,7 @@ public class LoginClass extends AsyncTask<Void, Void, LoginClass.Result> {
             values = new Result(object.getString("username"), object.getString("password"), object.getString("email"), object.getInt("tipo"));
             return null;
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
         values = null;

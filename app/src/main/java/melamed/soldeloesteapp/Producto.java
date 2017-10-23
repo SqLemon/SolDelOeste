@@ -3,7 +3,7 @@ package melamed.soldeloesteapp;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Producto implements Parcelable {
+class Producto implements Parcelable {
     private int id;
     private double precio;
     private String nombre;
@@ -32,7 +32,7 @@ public class Producto implements Parcelable {
         return precio;
     }
 
-    protected Producto(Parcel in) {
+    private Producto(Parcel in) {
         id = in.readInt();
         precio = in.readDouble();
         nombre = in.readString();
