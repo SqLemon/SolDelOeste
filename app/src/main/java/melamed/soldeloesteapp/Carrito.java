@@ -57,12 +57,11 @@ class Carrito extends ProductList implements Parcelable {
             }
         }
     }
-
-    boolean setCantidad(Producto p, int cantidad) {
-        if (!carro.containsKey(p.getId())) return false;
-        if (cantidad < 1) return false;
+    
+    void setCantidad(Producto p, int cantidad){
+        if(!carro.containsKey(p.getId())) return;
+        if(cantidad < 1) return;
         carro.put(p.getId(), cantidad);
-        return true;
     }
 
     @Override

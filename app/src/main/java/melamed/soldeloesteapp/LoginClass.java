@@ -84,8 +84,10 @@ class LoginClass extends AsyncTask<Void, Void, LoginClass.Result> {
     }
 
     class Result{
-        private String user, mail, pass;
-        private int tipo;
+        private final String user;
+        private final String mail;
+        private final String pass;
+        private final int tipo;
 
         Result(String user, String pass, String mail, int tipo){
             this.user = user;

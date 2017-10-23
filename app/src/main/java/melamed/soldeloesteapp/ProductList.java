@@ -30,7 +30,7 @@ class ProductList implements List<Producto>, Parcelable {
         for(Producto p : list) if(p.getId() == id) return p;
         return null;
     }*/
-    private List<Producto> list;
+    private final List<Producto> list;
 
     ProductList(){
         list = new ArrayList<>();

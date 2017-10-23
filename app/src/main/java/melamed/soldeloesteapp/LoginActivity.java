@@ -13,14 +13,14 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 
 public class LoginActivity extends AppCompatActivity{
-
-    SharedPreferences preferences;
-    TextInputLayout tilUser;
-    TextInputLayout tilPass;
-    EditText txbUser;
-    EditText txbPass;
-    Button btnLogin;
-    ProgressBar progressBar;
+	
+	private SharedPreferences preferences;
+	private TextInputLayout tilUser;
+	private TextInputLayout tilPass;
+	private EditText txbUser;
+	private EditText txbPass;
+	private Button btnLogin;
+	private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +41,9 @@ public class LoginActivity extends AppCompatActivity{
         });
         tryGetCreds();
     }
-
-    void tryGetCreds() {
-        tilUser.setEnabled(false);
+	
+	private void tryGetCreds(){
+		tilUser.setEnabled(false);
         tilPass.setEnabled(false);
         btnLogin.setEnabled(false);
         progressBar.setVisibility(View.VISIBLE);
@@ -60,9 +60,9 @@ public class LoginActivity extends AppCompatActivity{
         }
         loggedIn(u, p, m, t);
     }
-
-    void loggedIn(String user, String pass, String mail, int tipo) {
-        SharedPreferences.Editor editor = preferences.edit();
+	
+	private void loggedIn(String user, String pass, String mail, int tipo){
+		SharedPreferences.Editor editor = preferences.edit();
         editor.putString("user", user);
         editor.putString("pass", pass);
         editor.putString("mail", mail);
@@ -78,9 +78,9 @@ public class LoginActivity extends AppCompatActivity{
         getApplicationContext().startActivity(i);
 	    finish();
     }
-
-    void login() {
-        LoginClass clase = new LoginClass();
+	
+	private void login(){
+		LoginClass clase = new LoginClass();
         clase.setOnTaskCompletedListener(new LoginClass.onTaskCompletedListener() {
             @Override
             public void onTaskCompleted(LoginClass.Result result) {

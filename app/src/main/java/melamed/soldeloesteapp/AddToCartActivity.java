@@ -21,11 +21,12 @@ import android.widget.TextView;
 import java.util.List;
 
 public class AddToCartActivity extends AppCompatActivity{
-    Carrito carrito;
-    ProductList listaEntera;
-    AutoCompleteTextView txtProdNombre, txtProdMarca;
-    EditText numProdCant;
-    TextView lblProdPrecio;
+	private Carrito carrito;
+	private ProductList listaEntera;
+	private AutoCompleteTextView txtProdNombre;
+	private AutoCompleteTextView txtProdMarca;
+	private EditText numProdCant;
+	private TextView lblProdPrecio;
 	
 	@Override
 	public void onBackPressed(){
@@ -145,15 +146,15 @@ public class AddToCartActivity extends AppCompatActivity{
         });
 		
 	}
-
-    void populateNames(String s) {
-        List<String> t = listaEntera.getNombres(s);
+	
+	private void populateNames(String s){
+		List<String> t = listaEntera.getNombres(s);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, t);
         txtProdNombre.setAdapter(adapter);
     }
-
-    void populateBrands(String s) {
-        List<String> t = listaEntera.getMarcas(s);
+	
+	private void populateBrands(String s){
+		List<String> t = listaEntera.getMarcas(s);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, t);
         txtProdMarca.setAdapter(adapter);
     }
@@ -177,9 +178,9 @@ public class AddToCartActivity extends AppCompatActivity{
         }
         return super.onOptionsItemSelected(item);
     }
-
-    void trySave() {
-        String nombre = ((AutoCompleteTextView) findViewById(R.id.txtProdNombre)).getText().toString();
+	
+	private void trySave(){
+		String nombre = ((AutoCompleteTextView) findViewById(R.id.txtProdNombre)).getText().toString();
         String marca = ((AutoCompleteTextView) findViewById(R.id.txtProdMarca)).getText().toString();
         String strcantidad = ((EditText) findViewById(R.id.numProdCant)).getText().toString();
         int cantidad = 0;
@@ -233,9 +234,9 @@ public class AddToCartActivity extends AppCompatActivity{
         }
         returnToParent();
     }
-
-    void returnToParent() {
-        Intent i = new Intent().putExtra("data", carrito);
+	
+	private void returnToParent(){
+		Intent i = new Intent().putExtra("data", carrito);
 
         setResult(RESULT_OK, i);
         finish();

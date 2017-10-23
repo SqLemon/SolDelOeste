@@ -14,13 +14,14 @@ import android.view.MenuItem;
 import android.view.View;
 
 public class CarritoActivity extends AppCompatActivity{
-	static final int ADD_REQUEST = 1;
-	Carrito carrito;
-	ProductList listaEntera;
-    RecyclerView rv;
-    RVAdapter rvAdapter;
-    boolean a = false, b = false;
-    Menu mMenu;
+	private static final int ADD_REQUEST = 1;
+	private Carrito carrito;
+	private ProductList listaEntera;
+	private RecyclerView rv;
+	private RVAdapter rvAdapter;
+	private boolean a = false;
+	private boolean b = false;
+	private Menu mMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +39,9 @@ public class CarritoActivity extends AppCompatActivity{
 	    rv.setVisibility(View.GONE);
 	    findViewById(R.id.dummyText).setVisibility(View.GONE);
     }
-
-    void attachHelper() {
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.START | ItemTouchHelper.END) {
+	
+	private void attachHelper(){
+		new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.START | ItemTouchHelper.END) {
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
                 return false;
@@ -104,7 +105,7 @@ public class CarritoActivity extends AppCompatActivity{
         return super.onOptionsItemSelected(item);
 	}
 	
-	void logoff(){
+	private void logoff(){
 		getPreferences(MODE_PRIVATE).edit().remove("user").remove("pass").remove("mail").remove("tipo").apply();
 		Intent i =
 			new Intent(getApplicationContext(), LoginActivity.class)
@@ -120,9 +121,9 @@ public class CarritoActivity extends AppCompatActivity{
             refresh();
         }
     }
-
-    void refresh() {
-        if (carrito.size() == 0) {
+	
+	private void refresh(){
+		if (carrito.size() == 0) {
             rv.setVisibility(View.GONE);
             findViewById(R.id.dummyText).setVisibility(View.VISIBLE);
         } else {
@@ -133,9 +134,9 @@ public class CarritoActivity extends AppCompatActivity{
 	    rv.setAdapter(rvAdapter);
 	    rv.invalidate();
     }
-
-    void getProductos() {
-        GetProductosClass clase = new GetProductosClass();
+	
+	private void getProductos(){
+		GetProductosClass clase = new GetProductosClass();
         clase.setOnTaskCompletedListener(new GetProductosClass.onTaskCompletedListener() {
             @Override
             public void onTaskCompleted(ProductList result) {

@@ -1,6 +1,5 @@
 package melamed.soldeloesteapp;
 
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +8,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 class RVAdapter extends RecyclerView.Adapter<RVAdapter.ProductHolder> {
-    private Carrito c;
+    private final Carrito c;
 
     RVAdapter(Carrito c) {
         super();
@@ -51,20 +50,17 @@ class RVAdapter extends RecyclerView.Adapter<RVAdapter.ProductHolder> {
     public int getItemCount(){
         return c.size();
     }
-
-    @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView){
-        super.onAttachedToRecyclerView(recyclerView);
-    }
-
+    
     static class ProductHolder extends RecyclerView.ViewHolder {
-        CardView cv;
-        TextView lblNombre, lblMarca, lblCantidad, lblPrecio;
-        ImageButton btnPlusOne, btnMinusOne;
+        final TextView lblNombre;
+        final TextView lblMarca;
+        final TextView lblCantidad;
+        final TextView lblPrecio;
+        final ImageButton btnPlusOne;
+        final ImageButton btnMinusOne;
 
         ProductHolder(View itemView) {
             super(itemView);
-            cv = itemView.findViewById(R.id.card_view);
             lblNombre = itemView.findViewById(R.id.lblNombre);
             lblMarca = itemView.findViewById(R.id.lblMarca);
             lblCantidad = itemView.findViewById(R.id.lblCantidad);
