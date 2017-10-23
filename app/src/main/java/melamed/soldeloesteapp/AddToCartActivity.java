@@ -20,63 +20,104 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class AddToCart extends AppCompatActivity {
+public class AddToCartActivity extends AppCompatActivity{
     Carrito carrito;
     ProductList listaEntera;
     AutoCompleteTextView txtProdNombre, txtProdMarca;
     EditText numProdCant;
     TextView lblProdPrecio;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+	
+	@Override
+	public void onBackPressed(){
+		if(((AutoCompleteTextView) findViewById(R.id.txtProdNombre)).getText().toString().equals("") &&
+			((AutoCompleteTextView) findViewById(R.id.txtProdMarca)).getText().toString().equals("") &&
+			((EditText) findViewById(R.id.numProdCant)).getText().toString().equals("")){
+			setResult(RESULT_CANCELED);
+			finish();
+			return;
+		}
+		new AlertDialog.Builder(this)
+			.setMessage("¿Deseas descartar los cambios?")
+			//.setCancelable(false)
+			.setPositiveButton(
+				"Descartar",
+				new DialogInterface.OnClickListener(){
+					@Override
+					public void onClick(DialogInterface dialog, int which){
+						setResult(RESULT_CANCELED);
+						finish();
+					}
+				})
+			.setNegativeButton(
+				"Cancelar",
+				new DialogInterface.OnClickListener(){
+					@Override
+					public void onClick(DialogInterface dialog, int which){
+						dialog.cancel();
+					}
+				})
+			.create()
+			.show();
+	}
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState){
+		super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_to_cart);
         carrito = getIntent().getParcelableExtra("cart");
         listaEntera = getIntent().getParcelableExtra("list");
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_add2cart);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        txtProdNombre = (AutoCompleteTextView) findViewById(R.id.txtProdNombre);
-        txtProdMarca = (AutoCompleteTextView) findViewById(R.id.txtProdMarca);
-        numProdCant = (EditText) findViewById(R.id.numProdCant);
-        lblProdPrecio = (TextView) findViewById(R.id.lblProdPrecio);
+		
+		Toolbar toolbar = findViewById(R.id.toolbar_add2cart);
+		setSupportActionBar(toolbar);
+		
+		txtProdNombre = findViewById(R.id.txtProdNombre);
+		txtProdMarca = findViewById(R.id.txtProdMarca);
+		numProdCant = findViewById(R.id.numProdCant);
+		lblProdPrecio = findViewById(R.id.lblProdPrecio);
 
         txtProdNombre.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, listaEntera.getNombres()));
         txtProdMarca.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, listaEntera.getMarcas()));
-
+		
+		txtProdNombre.setOnClickListener(new View.OnClickListener(){
+			@Override
+			public void onClick(View v){
+				txtProdNombre.showDropDown();
+			}
+		});
+		txtProdMarca.setOnClickListener(new View.OnClickListener(){
+			@Override
+			public void onClick(View v){
+				txtProdMarca.showDropDown();
+			}
+		});
+		
         txtProdNombre.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    txtProdNombre.showDropDown();
-                } else {
-                    TextInputLayout j = (TextInputLayout) findViewById(R.id.dummyL2);
-                    j.setError("El producto no existe");
-                    String t = ((AutoCompleteTextView) v).getText().toString();
-                    if (listaEntera.getNombres().contains(t)) {
-                        j.setError(null);
-                        populateBrands(t);
-                    }
-                }
+	            if(!hasFocus){
+		            TextInputLayout j = findViewById(R.id.dummyL1);
+		            j.setError(getString(R.string.nonexistent));
+		            String t = ((AutoCompleteTextView) v).getText().toString();
+		            if(listaEntera.getNombres().contains(t)){
+			            j.setError(null);
+			            populateBrands(t);
+		            }
+	            }
             }
         });
 
         txtProdMarca.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    txtProdMarca.showDropDown();
-                } else {
-                    TextInputLayout j = (TextInputLayout) findViewById(R.id.dummyL2);
-                    j.setError("La marca no existe");
-                    String t = ((AutoCompleteTextView) v).getText().toString();
-                    if (listaEntera.getMarcas().contains(t)) {
-                        j.setError(null);
-                        populateNames(t);
-                    }
-                }
+	            if(!hasFocus){
+		            TextInputLayout j = findViewById(R.id.dummyL2);
+		            j.setError(getString(R.string.nonexistentbrand));
+		            String t = ((AutoCompleteTextView) v).getText().toString();
+		            if(listaEntera.getMarcas().contains(t)){
+			            j.setError(null);
+			            populateNames(t);
+		            }
+	            }
             }
         });
 
@@ -86,23 +127,24 @@ public class AddToCart extends AppCompatActivity {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
-            }
-
-            @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 int a = 0;
                 if (!s.toString().equals("")) a = Integer.parseInt(s.toString());
                 Producto p = listaEntera.getByNombreMarca(txtProdNombre.getText().toString(), txtProdMarca.getText().toString());
                 if (p == null | a < 1) {
-                    lblProdPrecio.setText("N/A");
-                    return;
+	                lblProdPrecio.setText(R.string.n_a);
+	                return;
                 }
                 double pr = a * p.getPrecio();
                 lblProdPrecio.setText(String.valueOf(pr));
             }
+	
+	        @Override
+	        public void afterTextChanged(Editable s){
+	        }
         });
-    }
+		
+	}
 
     void populateNames(String s) {
         List<String> t = listaEntera.getNombres(s);
@@ -121,9 +163,9 @@ public class AddToCart extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.toolbar_add_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
             case R.id.action_ok:
@@ -148,18 +190,18 @@ public class AddToCart extends AppCompatActivity {
         ((TextInputLayout) findViewById(R.id.dummyL3)).setError(null);
 
         if (!listaEntera.getNombres().contains(nombre))
-            ((TextInputLayout) findViewById(R.id.dummyL1)).setError("El producto no existe");
-        if (!listaEntera.getMarcas().contains(marca))
-            ((TextInputLayout) findViewById(R.id.dummyL2)).setError("La marca no existe");
-        if (nombre.equals(""))
-            ((TextInputLayout) findViewById(R.id.dummyL1)).setError("Campo requerido");
-        if (marca.equals(""))
-            ((TextInputLayout) findViewById(R.id.dummyL2)).setError("Campo requerido");
+	        ((TextInputLayout) findViewById(R.id.dummyL1)).setError(getString(R.string.nonexistent));
+	    if(!listaEntera.getMarcas().contains(marca))
+		    ((TextInputLayout) findViewById(R.id.dummyL2)).setError(getString(R.string.nonexistentbrand));
+	    if(nombre.equals(""))
+		    ((TextInputLayout) findViewById(R.id.dummyL1)).setError(getString(R.string.requiredfield));
+	    if(marca.equals(""))
+		    ((TextInputLayout) findViewById(R.id.dummyL2)).setError(getString(R.string.requiredfield));
 
         if (strcantidad.equals("")) {
-            ((TextInputLayout) findViewById(R.id.dummyL3)).setError("Campo requerido");
+	        ((TextInputLayout) findViewById(R.id.dummyL3)).setError(getString(R.string.requiredfield));
         } else if (cantidad < 1) {
-            ((TextInputLayout) findViewById(R.id.dummyL3)).setError("La cantidad es inválida");
+	        ((TextInputLayout) findViewById(R.id.dummyL3)).setError(getString(R.string.invalidquantity));
         }
 
         if ((((TextInputLayout) findViewById(R.id.dummyL1)).getError() != null) |
@@ -170,22 +212,24 @@ public class AddToCart extends AppCompatActivity {
 
         Producto p = listaEntera.getByNombreMarca(nombre, marca);
         if (p == null) {
-            Snackbar.make(findViewById(R.id.dummyXX), "No existe ese producto de la marca seleccionada.", Snackbar.LENGTH_LONG);
-            return;
+	        Snackbar.make(findViewById(R.id.dummyXX), R.string.nonexistentcombination, Snackbar.LENGTH_LONG);
+	        return;
         }
 
         if(!carrito.add(p, cantidad)){
             new AlertDialog.Builder(this)
-                .setTitle("Error")
-                .setMessage("El producto ya está en el carrito.")
-                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                    @Override public void onClick(DialogInterface dialog, int which) {
-                        setResult(RESULT_CANCELED);
+	            .setTitle(R.string.error)
+	            .setMessage(R.string.alreadyincart)
+	            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener(){
+		            @Override
+		            public void onClick(DialogInterface dialog, int which){
+			            setResult(RESULT_CANCELED);
                         finish();
                     }})
                 .setCancelable(false)
-                .show();
-            return;
+	            .create()
+	            .show();
+	        return;
         }
         returnToParent();
     }

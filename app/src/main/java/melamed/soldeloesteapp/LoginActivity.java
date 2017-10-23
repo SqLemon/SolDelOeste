@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity{
 
     SharedPreferences preferences;
     TextInputLayout tilUser;
@@ -24,17 +24,17 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        preferences = this.getPreferences(Context.MODE_PRIVATE);
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        progressBar = (ProgressBar) findViewById(R.id.progressbar);
-        txbUser = (EditText) findViewById(R.id.txbUser);
-        txbPass = (EditText) findViewById(R.id.txbPass);
-        tilUser = (TextInputLayout) findViewById(R.id.dummyLayout1);
-        tilPass = (TextInputLayout) findViewById(R.id.dummyLayout2);
-        btnLogin = (Button) findViewById(R.id.btnLogin);
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
+	    preferences = getPreferences(Context.MODE_PRIVATE);
+	    super.onCreate(savedInstanceState);
+	    setContentView(R.layout.activity_login);
+	    progressBar = findViewById(R.id.progressbar);
+	    txbUser = findViewById(R.id.txbUser);
+	    txbPass = findViewById(R.id.txbPass);
+	    tilUser = findViewById(R.id.dummyLayout1);
+	    tilPass = findViewById(R.id.dummyLayout2);
+	    btnLogin = findViewById(R.id.btnLogin);
+	    btnLogin.setOnClickListener(new View.OnClickListener(){
+		    @Override
             public void onClick(View v) {
                 login();
             }
@@ -68,15 +68,15 @@ public class MainActivity extends AppCompatActivity {
         editor.putString("mail", mail);
         editor.putInt("tipo", tipo);
         editor.apply();
-
-        Class c = (tipo > 0 ? VentaActivity.class : Clientes2.class);
-        Intent i = new Intent(getApplicationContext(), c)
-                .putExtra("user", user)
+	
+	    Class c = (tipo > 0 ? VentaActivity.class : CarritoActivity.class);
+	    Intent i = new Intent(getApplicationContext(), c)
+		    .putExtra("user", user)
                 .putExtra("pass", pass)
                 .putExtra("mail", mail)
-                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         getApplicationContext().startActivity(i);
+	    finish();
     }
 
     void login() {

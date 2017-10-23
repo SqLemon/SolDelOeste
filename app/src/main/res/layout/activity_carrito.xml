@@ -2,21 +2,21 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FAFAFA"
     android:theme="@style/AppThemeNoBar"
-    android:id="@+id/coordinator"
-    tools:context="melamed.soldeloesteapp.Clientes2">
+    tools:context="melamed.soldeloesteapp.CarritoActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <android.support.design.widget.AppBarLayout
+            android:id="@+id/tb_clientes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tb_clientes"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -26,9 +26,9 @@
                 android:background="?attr/colorPrimary"
                 android:minHeight="?attr/actionBarSize"
                 app:layout_scrollFlags="scroll|enterAlways"
-                app:title="Carrito"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:title="Carrito">
 
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
@@ -53,18 +53,19 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="16dp"
-                android:text="El carrito está vacío"
+                android:text="@string/emptycart"
+                android:textAlignment="center"
                 android:visibility="visible" />
 
             <ProgressBar
                 android:id="@+id/progress_bar"
-                android:layout_centerInParent="true"
                 style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
                 android:indeterminate="true"
                 android:indeterminateBehavior="repeat"
-                android:visibility="gone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:visibility="gone" />
 
         </RelativeLayout>
 

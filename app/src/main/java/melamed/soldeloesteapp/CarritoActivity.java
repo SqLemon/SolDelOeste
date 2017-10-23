@@ -13,30 +13,30 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-public class Clientes2 extends AppCompatActivity {
-    Carrito carrito;
-    ProductList listaEntera;
+public class CarritoActivity extends AppCompatActivity{
+	static final int ADD_REQUEST = 1;
+	Carrito carrito;
+	ProductList listaEntera;
     RecyclerView rv;
     RVAdapter rvAdapter;
-    static final int ADD_REQUEST = 1;
     boolean a = false, b = false;
     Menu mMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_clientes2);
-        findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
-        getProductos();
+	    setContentView(R.layout.activity_carrito);
+	    findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
+	    getProductos();
         carrito = new Carrito();
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_clientes);
-        setSupportActionBar(toolbar);
-        rvAdapter = new RVAdapter(carrito);
-        rv = (RecyclerView) findViewById(R.id.recView);
-        RecyclerView.LayoutManager llm = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        rv.setLayoutManager(llm);
+	    Toolbar toolbar = findViewById(R.id.toolbar_clientes);
+	    setSupportActionBar(toolbar);
+	    rv = findViewById(R.id.recView);
+	    RecyclerView.LayoutManager llm = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+	    rv.setLayoutManager(llm);
         attachHelper();
-        rv.setAdapter(rvAdapter);
+	    rv.setVisibility(View.GONE);
+	    findViewById(R.id.dummyText).setVisibility(View.GONE);
     }
 
     void attachHelper() {
@@ -69,29 +69,49 @@ public class Clientes2 extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        a = true;
-        if(a && b){
-            getMenuInflater().inflate(R.menu.toolbar_cart_menu, menu);
-        } else mMenu = menu;
+	    if(b){
+		    getMenuInflater().inflate(R.menu.toolbar_cart_menu, menu);
+	    } else {
+		    mMenu = menu;
+		    a = true;
+	    }
         return super.onCreateOptionsMenu(menu);
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
             case R.id.action_add:
-                Intent intent = new Intent(Clientes2.this, AddToCart.class);
-                intent.putExtra("cart", carrito);
-                intent.putExtra("list", listaEntera);
+	            Intent intent = new Intent(CarritoActivity.this, AddToCartActivity.class);
+	            intent.putExtra("cart", carrito);
+	            intent.putExtra("list", listaEntera);
                 startActivityForResult(intent, ADD_REQUEST);
                 return true;
+	
+	        case R.id.action_delete:
+		        carrito = new Carrito();
+		        refresh();
+		        return true;
+	
+	        case R.id.action_logoff:
+		        logoff();
+		        break;
 
             default:
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
+	}
+	
+	void logoff(){
+		getPreferences(MODE_PRIVATE).edit().remove("user").remove("pass").remove("mail").remove("tipo").apply();
+		Intent i =
+			new Intent(getApplicationContext(), LoginActivity.class)
+				.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		getApplicationContext().startActivity(i);
+		finish();
+	}
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -107,11 +127,11 @@ public class Clientes2 extends AppCompatActivity {
             findViewById(R.id.dummyText).setVisibility(View.VISIBLE);
         } else {
             rv.setVisibility(View.VISIBLE);
-            rvAdapter = new RVAdapter(carrito);
-            rv.setAdapter(rvAdapter);
-            rv.invalidate();
             findViewById(R.id.dummyText).setVisibility(View.GONE);
         }
+	    rvAdapter = new RVAdapter(carrito);
+	    rv.setAdapter(rvAdapter);
+	    rv.invalidate();
     }
 
     void getProductos() {
@@ -131,10 +151,11 @@ public class Clientes2 extends AppCompatActivity {
                         refresh();
                     }
                 });
-                b = true;
-                if(a && b){
-                    getMenuInflater().inflate(R.menu.toolbar_cart_menu, mMenu);
-                }
+	            if(a){
+		            getMenuInflater().inflate(R.menu.toolbar_cart_menu, mMenu);
+	            } else b = true;
+	            rv.setVisibility(View.VISIBLE);
+	            findViewById(R.id.dummyText).setVisibility(View.VISIBLE);
             }
         });
         try {

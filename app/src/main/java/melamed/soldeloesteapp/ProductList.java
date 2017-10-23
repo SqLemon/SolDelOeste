@@ -13,12 +13,37 @@ import java.util.ListIterator;
 import java.util.Set;
 
 class ProductList implements List<Producto>, Parcelable {
-    private List<Producto> list;
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<ProductList> CREATOR = new Parcelable.Creator<ProductList>(){
+        @Override
+        public ProductList createFromParcel(Parcel in){
+            return new ProductList(in);
+        }
+
+        @Override
+        public ProductList[] newArray(int size){
+            return new ProductList[size];
+        }
+    };
 
     /*public Producto getById(int id){
         for(Producto p : list) if(p.getId() == id) return p;
         return null;
     }*/
+    private List<Producto> list;
+
+    ProductList(){
+        list = new ArrayList<>();
+    }
+
+    ProductList(Parcel in){
+        if(in.readByte() == 0x01){
+            list = new ArrayList<>();
+            in.readList(list, Producto.class.getClassLoader());
+        } else {
+            list = null;
+        }
+    }
 
     Producto getByNombreMarca(String nombre, String marca) {
         for (Producto p : list)
@@ -66,10 +91,6 @@ class ProductList implements List<Producto>, Parcelable {
         return ls;
     }
 
-    ProductList() {
-        list = new ArrayList<>();
-    }
-
     @Override
     public int size() {
         return list.size();
@@ -105,8 +126,7 @@ class ProductList implements List<Producto>, Parcelable {
 
     @Override
     public boolean add(Producto producto) {
-        if(list.contains(producto)) return false;
-        return list.add(producto);
+        return !list.contains(producto) && list.add(producto);
     }
 
     @Override
@@ -142,16 +162,6 @@ class ProductList implements List<Producto>, Parcelable {
     @Override
     public void clear() {
         list.clear();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        return list.equals(o);
-    }
-
-    @Override
-    public int hashCode() {
-        return list.hashCode();
     }
 
     @Override
@@ -202,17 +212,18 @@ class ProductList implements List<Producto>, Parcelable {
     }
 
     @Override
-    public int describeContents() {
-        return hashCode();
+    public int hashCode(){
+        return list.hashCode();
     }
 
-    ProductList(Parcel in) {
-        if (in.readByte() == 0x01) {
-            list = new ArrayList<>();
-            in.readList(list, Producto.class.getClassLoader());
-        } else {
-            list = null;
-        }
+    @Override
+    public boolean equals(Object o){
+        return o instanceof ProductList && list.equals(o);
+    }
+
+    @Override
+    public int describeContents(){
+        return hashCode();
     }
 
     @Override
@@ -224,17 +235,4 @@ class ProductList implements List<Producto>, Parcelable {
             dest.writeList(list);
         }
     }
-
-    @SuppressWarnings("unused")
-    public static final Parcelable.Creator<ProductList> CREATOR = new Parcelable.Creator<ProductList>() {
-        @Override
-        public ProductList createFromParcel(Parcel in) {
-            return new ProductList(in);
-        }
-
-        @Override
-        public ProductList[] newArray(int size) {
-            return new ProductList[size];
-        }
-    };
 }

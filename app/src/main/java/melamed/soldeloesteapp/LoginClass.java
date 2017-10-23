@@ -19,62 +19,20 @@ import java.net.URL;
 class LoginClass extends AsyncTask<Void, Void, LoginClass.Result> {
     private Result values;
     private URL url;
-    private String user;
-    private String pass;
     private String query;
     private onTaskCompletedListener listener;
-
-    class Result {
-        private String user, mail, pass;
-        private int tipo;
-
-        Result(String user, String pass, String mail, int tipo) {
-            this.user = user;
-            this.pass = pass;
-            this.mail = mail;
-        }
-
-        String getUser() {
-            return this.user;
-        }
-
-        String getPass() {
-            return this.pass;
-        }
-
-        String getMail() {
-            return this.mail;
-        }
-
-        int getTipo() {
-            return this.tipo;
-        }
-    }
 
     void setOnTaskCompletedListener(onTaskCompletedListener listener) {
         this.listener = listener;
     }
 
-    interface onTaskCompletedListener {
-        void onTaskCompleted(Result result);
-    }
-
-
     void login(String user, String pass) throws MalformedURLException {
-        this.user = user;
-        this.pass = pass;
         query = new Uri.Builder()
                 .appendQueryParameter("user", user)
                 .appendQueryParameter("pass", pass)
                 .build().getEncodedQuery();
         url = new URL("http://soldeloeste.tk/login.php");
         execute();
-    }
-
-    @Override
-    protected void onPostExecute(Result v) {
-        super.onPostExecute(v);
-        listener.onTaskCompleted(values);
     }
 
     @Override
@@ -113,6 +71,44 @@ class LoginClass extends AsyncTask<Void, Void, LoginClass.Result> {
         }
         values = null;
         return null;
+    }
+
+    @Override
+    protected void onPostExecute(Result v){
+        super.onPostExecute(v);
+        listener.onTaskCompleted(values);
+    }
+
+    interface onTaskCompletedListener{
+        void onTaskCompleted(Result result);
+    }
+
+    class Result{
+        private String user, mail, pass;
+        private int tipo;
+
+        Result(String user, String pass, String mail, int tipo){
+            this.user = user;
+            this.pass = pass;
+            this.mail = mail;
+            this.tipo = tipo;
+        }
+
+        String getUser(){
+            return this.user;
+        }
+
+        String getPass(){
+            return this.pass;
+        }
+
+        String getMail(){
+            return this.mail;
+        }
+
+        int getTipo(){
+            return this.tipo;
+        }
     }
 }
 

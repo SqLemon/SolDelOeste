@@ -5,16 +5,31 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
 
 class Carrito extends ProductList implements Parcelable {
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Carrito> CREATOR = new Parcelable.Creator<Carrito>(){
+        @Override
+        public Carrito createFromParcel(Parcel in){
+            return new Carrito(in);
+        }
+
+        @Override
+        public Carrito[] newArray(int size){
+            return new Carrito[size];
+        }
+    };
     @SuppressLint("UseSparseArrays")
     private HashMap<Integer, Integer> carro = new HashMap<>();
 
     Carrito() {
         super();
+    }
+
+    private Carrito(Parcel in){
+        super(in);
+        carro = in.readHashMap(HashMap.class.getClassLoader());
     }
 
     int getCantidad(Producto p) {
@@ -50,11 +65,6 @@ class Carrito extends ProductList implements Parcelable {
         return true;
     }
 
-    private Carrito(Parcel in) {
-        super(in);
-        carro = in.readHashMap(HashMap.class.getClassLoader());
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -65,17 +75,4 @@ class Carrito extends ProductList implements Parcelable {
         super.writeToParcel(dest, flags);
         dest.writeMap(carro);
     }
-
-    @SuppressWarnings("unused")
-    public static final Parcelable.Creator<Carrito> CREATOR = new Parcelable.Creator<Carrito>() {
-        @Override
-        public Carrito createFromParcel(Parcel in) {
-            return new Carrito(in);
-        }
-
-        @Override
-        public Carrito[] newArray(int size) {
-            return new Carrito[size];
-        }
-    };
 }

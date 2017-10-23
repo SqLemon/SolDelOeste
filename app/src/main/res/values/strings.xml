@@ -14,4 +14,18 @@
     <string name="a_adir">Añadir</string>
     <string name="ver_compra">Ver Compra</string>
     <string name="enviar_pedido">Enviar Pedido</string>
+    <string name="precio">Precio:</string>
+    <string name="n_a">N/A</string>
+    <string name="nonexistent">El producto no existe</string>
+    <string name="nonexistentbrand">La marca no existe</string>
+    <string name="requiredfield">Campo requerido</string>
+    <string name="invalidquantity">La cantidad es inválida</string>
+    <string name="nonexistentcombination">No existe ese producto de la marca seleccionada.</string>
+    <string name="error">Error</string>
+    <string name="alreadyincart">El producto ya está en el carrito.</string>
+    <string name="cancel">Cancelar</string>
+    <string name="emptycart">El carrito está vacío.\nAgregue productos con el botón de agregar (+).</string>
+    <string name="guardar">Guardar</string>
+    <string name="vaciar">Vaciar carrito</string>
+    <string name="logoff">Cerrar sesión</string>
 </resources>

@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
+<requestFocus>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dummyXX"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/AppThemeNoBar"
-    android:id="@+id/dummyXX"
-    tools:context="melamed.soldeloesteapp.AddToCart">
+    tools:context="melamed.soldeloesteapp.AddToCartActivity">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:id="@+id/appBarLayout">
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar_add2cart"
@@ -21,9 +22,9 @@
             android:background="?attr/colorPrimary"
             android:minHeight="?attr/actionBarSize"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:title="Añadir producto"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:title="Añadir producto">
 
 
         </android.support.v7.widget.Toolbar>
@@ -36,47 +37,47 @@
         android:padding="16dp">
 
         <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
             android:id="@+id/dummyL1"
-            app:errorEnabled="true"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:errorEnabled="true">
 
             <AutoCompleteTextView
                 android:id="@+id/txtProdNombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Producto" />
+                android:hint="@string/producto" />
 
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
             android:id="@+id/dummyL2"
-            app:errorEnabled="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@id/dummyL1"
-            android:layout_height="wrap_content">
+            app:errorEnabled="true">
 
             <AutoCompleteTextView
                 android:id="@+id/txtProdMarca"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/txtProdNombre"
-                android:hint="Marca" />
+                android:hint="@string/marca" />
 
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
             android:id="@+id/dummyL3"
-            app:errorEnabled="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@id/dummyL2"
-            android:layout_height="wrap_content">
+            app:errorEnabled="true">
 
             <EditText
                 android:id="@+id/numProdCant"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Cantidad"
+                android:hint="@string/cantidad"
                 android:inputType="number" />
 
         </android.support.design.widget.TextInputLayout>
@@ -84,24 +85,25 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingStart="4dp"
             android:layout_below="@id/dummyL3"
             android:layout_marginTop="16dp"
-            android:textSize="18sp"
-            android:text="Precio: " />
+            android:paddingStart="4dp"
+            android:text="@string/precio"
+            android:textSize="18sp" />
 
         <TextView
+            android:id="@+id/lblProdPrecio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:layout_marginTop="16dp"
-            android:textColor="#000000"
-            android:id="@+id/lblProdPrecio"
-            android:layout_below="@id/dummyL3"
             android:layout_alignParentEnd="true"
-            android:text="N/A" />
+            android:layout_below="@id/dummyL3"
+            android:layout_marginTop="16dp"
+            android:text="@string/n_a"
+            android:textColor="#000000"
+            android:textSize="18sp" />
 
 
     </RelativeLayout>
 
 </RelativeLayout>
+</requestFocus>

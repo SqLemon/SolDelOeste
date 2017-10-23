@@ -48,15 +48,14 @@ class RVAdapter extends RecyclerView.Adapter<RVAdapter.ProductHolder> {
     }
 
     @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
-    }
-
-    @Override
-    public int getItemCount() {
+    public int getItemCount(){
         return c.size();
     }
 
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView){
+        super.onAttachedToRecyclerView(recyclerView);
+    }
 
     static class ProductHolder extends RecyclerView.ViewHolder {
         CardView cv;
@@ -65,13 +64,13 @@ class RVAdapter extends RecyclerView.Adapter<RVAdapter.ProductHolder> {
 
         ProductHolder(View itemView) {
             super(itemView);
-            cv = (CardView) itemView.findViewById(R.id.card_view);
-            lblNombre = (TextView) itemView.findViewById(R.id.lblNombre);
-            lblMarca = (TextView) itemView.findViewById(R.id.lblMarca);
-            lblCantidad = (TextView) itemView.findViewById(R.id.lblCantidad);
-            lblPrecio = (TextView) itemView.findViewById(R.id.lblPrecio);
-            btnMinusOne = (ImageButton) itemView.findViewById(R.id.btnMinusOne);
-            btnPlusOne = (ImageButton) itemView.findViewById(R.id.btnPlusOne);
+            cv = itemView.findViewById(R.id.card_view);
+            lblNombre = itemView.findViewById(R.id.lblNombre);
+            lblMarca = itemView.findViewById(R.id.lblMarca);
+            lblCantidad = itemView.findViewById(R.id.lblCantidad);
+            lblPrecio = itemView.findViewById(R.id.lblPrecio);
+            btnMinusOne = itemView.findViewById(R.id.btnMinusOne);
+            btnPlusOne = itemView.findViewById(R.id.btnPlusOne);
         }
     }
 }
