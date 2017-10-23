@@ -4,20 +4,30 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 class Producto implements Parcelable {
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Producto> CREATOR = new Parcelable.Creator<Producto>(){
+        @Override
+        public Producto createFromParcel(Parcel in){
+            return new Producto(in);
+        }
+        
+        @Override
+        public Producto[] newArray(int size){
+            return new Producto[size];
+        }
+    };
     private final int id;
     private final double precio;
     private final String nombre;
     private final String marca;
     
-    private final String marca;
-
     Producto(int id, String nombre, String marca, double precio) {
         this.id = id;
         this.nombre = nombre;
         this.marca = marca;
         this.precio = precio;
     }
-    
+
     private Producto(Parcel in){
         id = in.readInt();
         precio = in.readDouble();
@@ -45,7 +55,7 @@ class Producto implements Parcelable {
     public int describeContents() {
         return hashCode();
     }
-
+    
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
@@ -53,17 +63,4 @@ class Producto implements Parcelable {
         dest.writeString(nombre);
         dest.writeString(marca);
     }
-    
-    @SuppressWarnings("unused")
-    public static final Parcelable.Creator<Producto> CREATOR = new Parcelable.Creator<Producto>() {
-        @Override
-        public Producto createFromParcel(Parcel in) {
-            return new Producto(in);
-        }
-
-        @Override
-        public Producto[] newArray(int size) {
-            return new Producto[size];
-        }
-    };
 }
