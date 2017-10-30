@@ -28,4 +28,6 @@
     <string name="guardar">Guardar</string>
     <string name="vaciar">Vaciar carrito</string>
     <string name="logoff">Cerrar sesión</string>
+    <string name="recordarme">Recordarme</string>
+    <string name="log">Logo</string>
 </resources>

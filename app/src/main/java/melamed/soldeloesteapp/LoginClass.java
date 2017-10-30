@@ -1,6 +1,6 @@
 package melamed.soldeloesteapp;
 
-import android.net.Uri;
+import android.net.Uri.Builder;
 import android.os.AsyncTask;
 
 import org.json.JSONException;
@@ -16,31 +16,33 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-class LoginClass extends AsyncTask<Void, Void, LoginClass.Result> {
-    private Result values;
-    private URL url;
-    private String query;
-    private onTaskCompletedListener listener;
+import melamed.soldeloesteapp.LoginClass.Result;
 
-    void setOnTaskCompletedListener(onTaskCompletedListener listener) {
-        this.listener = listener;
-    }
+class LoginClass extends AsyncTask<Void, Void, Result>{
+	private LoginClass.Result values;
+	private URL url;
+	private String query;
+	private LoginClass.onTaskCompletedListener listener;
+	
+	void setOnTaskCompletedListener(LoginClass.onTaskCompletedListener listener){
+		this.listener = listener;
+	}
 
     void login(String user, String pass) throws MalformedURLException {
-        query = new Uri.Builder()
-                .appendQueryParameter("user", user)
-                .appendQueryParameter("pass", pass)
+	    this.query = new Builder()
+		    .appendQueryParameter("user", user)
+		    .appendQueryParameter("pass", pass)
                 .build().getEncodedQuery();
-        url = new URL("http://soldeloeste.tk/login.php");
-        execute();
+	    this.url = new URL("http://soldeloeste.tk/login.php");
+	    this.execute();
     }
 
     @Override
     protected LoginClass.Result doInBackground(Void... params) {
         try {
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(10000);
-            conn.setConnectTimeout(15000);
+	        HttpURLConnection conn = (HttpURLConnection) this.url.openConnection();
+	        conn.setReadTimeout(10000);
+	        conn.setConnectTimeout(15000);
             conn.setRequestMethod("POST");
             conn.setDoInput(true);
             conn.setDoOutput(true);
@@ -48,9 +50,9 @@ class LoginClass extends AsyncTask<Void, Void, LoginClass.Result> {
 
             OutputStream os = conn.getOutputStream();
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
-            writer.write(query);
-            writer.flush();
-            writer.close();
+	        writer.write(this.query);
+	        writer.flush();
+	        writer.close();
             os.close();
 
 
@@ -63,24 +65,24 @@ class LoginClass extends AsyncTask<Void, Void, LoginClass.Result> {
             String result = sb.toString();
 
             JSONObject object = new JSONObject(result);
-            values = new Result(object.getString("username"), object.getString("password"), object.getString("email"), object.getInt("tipo"));
-            return null;
+	        this.values = new LoginClass.Result(object.getString("username"), object.getString("password"), object.getString("email"), object.getInt("tipo"));
+	        return null;
 
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
-        values = null;
-        return null;
+	    this.values = null;
+	    return null;
     }
 
     @Override
-    protected void onPostExecute(Result v){
+    protected void onPostExecute(LoginClass.Result v){
         super.onPostExecute(v);
-        listener.onTaskCompleted(values);
+	    this.listener.onTaskCompleted(this.values);
     }
 
     interface onTaskCompletedListener{
-        void onTaskCompleted(Result result);
+	    void onTaskCompleted(LoginClass.Result result);
     }
 
     class Result{
@@ -97,19 +99,19 @@ class LoginClass extends AsyncTask<Void, Void, LoginClass.Result> {
         }
 
         String getUser(){
-            return this.user;
+	        return user;
         }
 
         String getPass(){
-            return this.pass;
+	        return pass;
         }
 
         String getMail(){
-            return this.mail;
+	        return mail;
         }
 
         int getTipo(){
-            return this.tipo;
+	        return tipo;
         }
     }
 }

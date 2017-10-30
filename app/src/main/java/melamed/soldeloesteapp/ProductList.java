@@ -14,7 +14,7 @@ import java.util.Set;
 
 class ProductList implements List<Producto>, Parcelable {
     @SuppressWarnings("unused")
-    public static final Parcelable.Creator<ProductList> CREATOR = new Parcelable.Creator<ProductList>(){
+    public static final Creator<ProductList> CREATOR = new Creator<ProductList>(){
         @Override
         public ProductList createFromParcel(Parcel in){
             return new ProductList(in);
@@ -33,29 +33,29 @@ class ProductList implements List<Producto>, Parcelable {
     private final List<Producto> list;
 
     ProductList(){
-        list = new ArrayList<>();
+	    this.list = new ArrayList<>();
     }
 
     ProductList(Parcel in){
         if(in.readByte() == 0x01){
-            list = new ArrayList<>();
-            in.readList(list, Producto.class.getClassLoader());
+	        this.list = new ArrayList<>();
+	        in.readList(this.list, Producto.class.getClassLoader());
         } else {
-            list = null;
+	        this.list = null;
         }
     }
 
     Producto getByNombreMarca(String nombre, String marca) {
-        for (Producto p : list)
-            if (p.getNombre().equals(nombre) && p.getMarca().equals(marca)) return p;
-        return null;
+	    for(Producto p : this.list)
+		    if(p.getNombre().equals(nombre) && p.getMarca().equals(marca)) return p;
+	    return null;
     }
 
     List<String> getNombres() {
         List<String> ls = new ArrayList<>();
-        for (Producto p : list) ls.add(p.getNombre());
-        Set<String> hs = new HashSet<>();
-        hs.addAll(ls);
+	    for(Producto p : this.list) ls.add(p.getNombre());
+	    Set<String> hs = new HashSet<>();
+	    hs.addAll(ls);
         ls.clear();
         ls.addAll(hs);
         return ls;
@@ -63,9 +63,9 @@ class ProductList implements List<Producto>, Parcelable {
 
     List<String> getNombres(String marca) {
         List<String> ls = new ArrayList<>();
-        for (Producto p : list) if (p.getMarca().equals(marca)) ls.add(p.getNombre());
-        Set<String> hs = new HashSet<>();
-        hs.addAll(ls);
+	    for(Producto p : this.list) if(p.getMarca().equals(marca)) ls.add(p.getNombre());
+	    Set<String> hs = new HashSet<>();
+	    hs.addAll(ls);
         ls.clear();
         ls.addAll(hs);
         return ls;
@@ -73,9 +73,9 @@ class ProductList implements List<Producto>, Parcelable {
 
     List<String> getMarcas() {
         List<String> ls = new ArrayList<>();
-        for (Producto p : list) ls.add(p.getMarca());
-        Set<String> hs = new HashSet<>();
-        hs.addAll(ls);
+	    for(Producto p : this.list) ls.add(p.getMarca());
+	    Set<String> hs = new HashSet<>();
+	    hs.addAll(ls);
         ls.clear();
         ls.addAll(hs);
         return ls;
@@ -83,9 +83,9 @@ class ProductList implements List<Producto>, Parcelable {
 
     List<String> getMarcas(String nombre) {
         List<String> ls = new ArrayList<>();
-        for (Producto p : list) if (p.getNombre().equals(nombre)) ls.add(p.getMarca());
-        Set<String> hs = new HashSet<>();
-        hs.addAll(ls);
+	    for(Producto p : this.list) if(p.getNombre().equals(nombre)) ls.add(p.getMarca());
+	    Set<String> hs = new HashSet<>();
+	    hs.addAll(ls);
         ls.clear();
         ls.addAll(hs);
         return ls;
@@ -93,55 +93,55 @@ class ProductList implements List<Producto>, Parcelable {
 
     @Override
     public int size() {
-        return list.size();
+	    return this.list.size();
     }
 
     @Override
     public boolean isEmpty() {
-        return list.isEmpty();
+	    return this.list.isEmpty();
     }
 
     @Override
     public boolean contains(Object o) {
-        return list.contains(o);
+	    return this.list.contains(o);
     }
 
     @NonNull
     @Override
     public Iterator<Producto> iterator() {
-        return list.iterator();
+	    return this.list.iterator();
     }
 
     @NonNull
     @Override
     public Object[] toArray() {
-        return list.toArray();
+	    return this.list.toArray();
     }
 
     @NonNull
     @Override
     public <T> T[] toArray(@NonNull T[] a) {
-        return list.toArray(a);
+	    return this.list.toArray(a);
     }
 
     @Override
     public boolean add(Producto producto) {
-        return !list.contains(producto) && list.add(producto);
+	    return !this.list.contains(producto) && this.list.add(producto);
     }
 
     @Override
     public boolean remove(Object o) {
-        return list.remove(o);
+	    return this.list.remove(o);
     }
 
     @Override
     public boolean containsAll(@NonNull Collection<?> c) {
-        return list.containsAll(c);
+	    return this.list.containsAll(c);
     }
 
     @Override
     public boolean addAll(@NonNull Collection<? extends Producto> c) {
-        return list.addAll(c);
+	    return this.list.addAll(c);
     }
 
     @Override
@@ -151,88 +151,88 @@ class ProductList implements List<Producto>, Parcelable {
 
     @Override
     public boolean removeAll(@NonNull Collection<?> c) {
-        return list.removeAll(c);
+	    return this.list.removeAll(c);
     }
 
     @Override
     public boolean retainAll(@NonNull Collection<?> c) {
-        return list.retainAll(c);
+	    return this.list.retainAll(c);
     }
 
     @Override
     public void clear() {
-        list.clear();
+	    this.list.clear();
     }
 
     @Override
     public Producto get(int index) {
-        return list.get(index);
+	    return this.list.get(index);
     }
 
     @Override
     public Producto set(int index, Producto element) {
-        return list.set(index, element);
+	    return this.list.set(index, element);
     }
 
     @Override
     public void add(int index, Producto element) {
-        list.add(index, element);
+	    this.list.add(index, element);
     }
 
     @Override
     public Producto remove(int index) {
-        return list.remove(index);
+	    return this.list.remove(index);
     }
 
     @Override
     public int indexOf(Object o) {
-        return list.indexOf(o);
+	    return this.list.indexOf(o);
     }
 
     @Override
     public int lastIndexOf(Object o) {
-        return list.lastIndexOf(o);
+	    return this.list.lastIndexOf(o);
     }
 
     @Override
     public ListIterator<Producto> listIterator() {
-        return list.listIterator();
+	    return this.list.listIterator();
     }
 
     @NonNull
     @Override
     public ListIterator<Producto> listIterator(int index) {
-        return list.listIterator(index);
+	    return this.list.listIterator(index);
     }
 
     @NonNull
     @Override
     public List<Producto> subList(int fromIndex, int toIndex) {
-        return list.subList(fromIndex, toIndex);
+	    return this.list.subList(fromIndex, toIndex);
     }
 
     @Override
     public int hashCode(){
-        return list.hashCode();
+	    return this.list.hashCode();
     }
 
     @Override
     public boolean equals(Object o){
-        return o instanceof ProductList && list.equals(o);
+	    return o instanceof ProductList && this.list.equals(o);
     }
 
     @Override
     public int describeContents(){
-        return hashCode();
+	    return this.hashCode();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        if (list == null) {
-            dest.writeByte((byte) (0x00));
-        } else {
-            dest.writeByte((byte) (0x01));
-            dest.writeList(list);
-        }
+	    if(this.list == null){
+		    dest.writeByte((byte) 0x00);
+	    } else {
+		    dest.writeByte((byte) 0x01);
+		    dest.writeList(this.list);
+	    }
     }
 }

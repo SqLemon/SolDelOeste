@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 class Producto implements Parcelable {
     @SuppressWarnings("unused")
-    public static final Parcelable.Creator<Producto> CREATOR = new Parcelable.Creator<Producto>(){
+    public static final Creator<Producto> CREATOR = new Creator<Producto>(){
         @Override
         public Producto createFromParcel(Parcel in){
             return new Producto(in);
@@ -29,38 +29,38 @@ class Producto implements Parcelable {
     }
 
     private Producto(Parcel in){
-        id = in.readInt();
-        precio = in.readDouble();
-        nombre = in.readString();
-        marca = in.readString();
+	    this.id = in.readInt();
+	    this.precio = in.readDouble();
+	    this.nombre = in.readString();
+	    this.marca = in.readString();
     }
 
     int getId() {
-        return id;
+	    return this.id;
     }
 
     String getNombre() {
-        return nombre;
+	    return this.nombre;
     }
 
     String getMarca() {
-        return marca;
+	    return this.marca;
     }
 
     double getPrecio() {
-        return precio;
+	    return this.precio;
     }
 
     @Override
     public int describeContents() {
-        return hashCode();
+	    return this.hashCode();
     }
     
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
-        dest.writeDouble(precio);
-        dest.writeString(nombre);
-        dest.writeString(marca);
+	    dest.writeInt(this.id);
+	    dest.writeDouble(this.precio);
+	    dest.writeString(this.nombre);
+	    dest.writeString(this.marca);
     }
 }
