@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".LoginActivity"
             android:label="@string/app_name"
@@ -30,17 +31,16 @@
             android:label="Sector empleados"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".CarritoActivity"
+            android:name=".ClientesActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNoBar" />
 
         <activity
             android:name=".AddToCartActivity"
-            android:parentActivityName=".CarritoActivity"
-            android:theme="@style/AppThemeNoBar">
+            android:parentActivityName=".ClientesActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".CarritoActivity" />
+                android:value=".ClientesActivity"/>
         </activity>
 
     </application>

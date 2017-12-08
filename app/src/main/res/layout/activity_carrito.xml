@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/coordinator"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:theme="@style/AppThemeNoBar"
-    tools:context="melamed.soldeloesteapp.CarritoActivity">
+                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                 xmlns:tools="http://schemas.android.com/tools"
+                                                 android:id="@+id/coordinator"
+                                                 android:layout_width="match_parent"
+                                                 android:layout_height="match_parent"
+                                                 android:theme="@style/AppThemeNoBar"
+                                                 tools:context="melamed.soldeloesteapp.ClientesActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -19,15 +19,15 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/toolbar_clientes"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
-                android:minHeight="?attr/actionBarSize"
-                app:layout_scrollFlags="scroll|enterAlways"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:title="Carrito">
+                                               android:id="@+id/toolbar_clientes"
+                                               android:layout_width="match_parent"
+                                               android:layout_height="?attr/actionBarSize"
+                                               android:background="?attr/colorPrimary"
+                                               android:minHeight="?attr/actionBarSize"
+                                               android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                                               app:layout_scrollFlags="scroll|enterAlways"
+                                               app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                                               app:title="Carrito">
 
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>

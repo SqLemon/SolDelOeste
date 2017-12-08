@@ -21,30 +21,20 @@ class GetProductosClass extends AsyncTask<Void, Void, ProductList> {
         this.listener = listener;
     }
 
-    interface onTaskCompletedListener {
-        void onTaskCompleted(ProductList result);
-    }
-
-    //TODO: SI QUEREMOS ENVIAR UN PASS DE CONFIRMACION (post versión beta) descomentar todo lo comentado
-    //private static final String pass = whatever; private String query;
-
     void getProductos() throws MalformedURLException {
         //query = new Uri.Builder().appendQueryParameter("pass", pass).build().getEncodedQuery();
         url = new URL("http://soldeloeste.tk/getProductos.php");
         execute();
     }
-
-    @Override
-    protected void onPostExecute(ProductList result) {
-        super.onPostExecute(result);
-        listener.onTaskCompleted(result);
-    }
+    
+    //TODO: SI QUEREMOS ENVIAR UN PASS DE CONFIRMACION (post versión beta) descomentar todo lo comentado
+    //private static final String pass = whatever; private String query;
 
     @Override
     protected ProductList doInBackground(Void... params) {
         try {
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(10000);
+            conn.setReadTimeout(20000);
             conn.setConnectTimeout(15000);
             conn.setDoInput(true);
             //conn.setDoOutput(true);
@@ -77,5 +67,15 @@ class GetProductosClass extends AsyncTask<Void, Void, ProductList> {
             e.printStackTrace();
         }
         return null;
+    }
+    
+    @Override
+    protected void onPostExecute(ProductList result){
+        super.onPostExecute(result);
+        listener.onTaskCompleted(result);
+    }
+    
+    interface onTaskCompletedListener{
+        void onTaskCompleted(ProductList result);
     }
 }

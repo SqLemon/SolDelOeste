@@ -15,7 +15,7 @@ import android.view.View;
 
 import java.net.MalformedURLException;
 
-public class CarritoActivity extends AppCompatActivity{
+public class ClientesActivity extends AppCompatActivity{
 	private static final int ADD_REQUEST = 1;
 	private Carrito carrito;
 	private ProductList listaEntera;
@@ -34,8 +34,7 @@ public class CarritoActivity extends AppCompatActivity{
 		Toolbar toolbar = findViewById(R.id.toolbar_clientes);
 		setSupportActionBar(toolbar);
 		rv = findViewById(R.id.recView);
-		RecyclerView.LayoutManager llm = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-		rv.setLayoutManager(llm);
+		rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 		attachHelper();
 		rv.setVisibility(View.GONE);
 		findViewById(R.id.dummyText).setVisibility(View.GONE);
@@ -86,7 +85,7 @@ public class CarritoActivity extends AppCompatActivity{
 		int id = item.getItemId();
 		switch(id){
 			case R.id.action_add:
-				Intent intent = new Intent(CarritoActivity.this, AddToCartActivity.class);
+				Intent intent = new Intent(ClientesActivity.this, AddToCartActivity.class);
 				intent.putExtra("cart", carrito);
 				intent.putExtra("list", listaEntera);
 				startActivityForResult(intent, ADD_REQUEST);
@@ -130,6 +129,7 @@ public class CarritoActivity extends AppCompatActivity{
 			rv.setVisibility(View.VISIBLE);
 			findViewById(R.id.dummyText).setVisibility(View.GONE);
 		}
+		rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 		RVAdapter rvAdapter = new RVAdapter(carrito);
 		rv.setAdapter(rvAdapter);
 		rv.invalidate();

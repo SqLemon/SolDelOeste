@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<requestFocus>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -100,10 +99,12 @@
             android:layout_marginTop="16dp"
             android:text="@string/n_a"
             android:textColor="#000000"
-            android:textSize="18sp" />
+            android:textSize="18sp">
+
+            <requestFocus/>
+        </TextView>
 
 
     </RelativeLayout>
 
 </RelativeLayout>
-</requestFocus>
