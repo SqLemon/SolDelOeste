@@ -37,6 +37,7 @@
 
         <activity
             android:name=".AddToCartActivity"
+            android:theme="@style/AppThemeNoBar"
             android:parentActivityName=".ClientesActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
