@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dummyXX"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/AppThemeNoBar"
+    tools:context="melamed.soldeloesteapp.AddToCartActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_add2cart"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:title="Añadir producto">
+
+
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/appBarLayout"
+        android:padding="16dp">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/dummyL1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:errorEnabled="true">
+
+            <AutoCompleteTextView
+                android:id="@+id/txtProdNombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/producto" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/dummyL2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/dummyL1"
+            app:errorEnabled="true">
+
+            <AutoCompleteTextView
+                android:id="@+id/txtProdMarca"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtProdNombre"
+                android:hint="@string/marca" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/dummyL3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/dummyL2"
+            app:errorEnabled="true">
+
+            <EditText
+                android:id="@+id/numProdCant"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/cantidad"
+                android:inputType="number" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/dummyL3"
+            android:layout_marginTop="16dp"
+            android:paddingStart="4dp"
+            android:text="@string/precio"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/lblProdPrecio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/dummyL3"
+            android:layout_marginTop="16dp"
+            android:text="@string/n_a"
+            android:textColor="#000000"
+            android:textSize="18sp">
+
+            <requestFocus/>
+        </TextView>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>
