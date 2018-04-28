@@ -137,7 +137,7 @@ public class AddToCartActivity extends AppCompatActivity{
 	                return;
                 }
                 double pr = a * p.getPrecio();
-                lblProdPrecio.setText(String.format("$0.00", String.valueOf(pr)));
+				lblProdPrecio.setText("$" + String.valueOf(pr));
             }
 	
 	        @Override

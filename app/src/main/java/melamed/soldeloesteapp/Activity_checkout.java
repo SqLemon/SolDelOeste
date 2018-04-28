@@ -17,21 +17,20 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public class Activity_checkout extends AppCompatActivity {
+    public String emailBody = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String emailBody = "";
         setContentView(R.layout.activity_checkout);
-        //Carrito carrito = ClientesActivity.
-
+        Intent i = getIntent();
+        emailBody = i.getStringExtra("eBody");
+        ((TextView) findViewById(R.id.txtVistaPedido)).setText(emailBody);
 
         findViewById(R.id.btnCheckOut).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = getIntent();
-                String emailBody = i.getStringExtra("eBody");
-                ((TextView) findViewById(R.id.txtVistaPedido)).setText(emailBody);
+
                 try {
                     sendMail(emailBody, "damimelamed@gmail.com");
                 } catch (UnsupportedEncodingException e) {

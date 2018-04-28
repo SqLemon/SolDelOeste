@@ -33,7 +33,7 @@ class RVAdapter extends Adapter<ProductHolder>{
 	    holder.lblMarca.setText(this.c.get(position).getMarca());
 	    int cantidad = this.c.getCantidad(this.c.get(position));
 	    double precio = this.c.get(position).getPrecio() * cantidad;
-	    holder.lblPrecio.setText(String.format("$0.00", String.valueOf(precio)));
+	    holder.lblPrecio.setText("$" + String.valueOf(precio));
 	    holder.lblCantidad.setText(String.valueOf(cantidad));
 	    holder.btnMinusOne.setOnClickListener(new OnClickListener(){
 		    @Override

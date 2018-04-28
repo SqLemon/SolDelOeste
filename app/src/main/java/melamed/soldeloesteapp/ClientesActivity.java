@@ -33,6 +33,7 @@ public class ClientesActivity extends AppCompatActivity{
 	private boolean a = false;
 	private boolean b = false;
 	private Menu mMenu;
+	//public String finalList = "";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
@@ -141,7 +142,7 @@ public class ClientesActivity extends AppCompatActivity{
 		}
 	}
 
-	private String createEmailBody(Carrito lista, String user){
+	public String createEmailBody(Carrito lista, String user){
 		String emailBody = "Usuario: " + user + "\n\n";
 		emailBody += "Producto\tMarca\tPrecio Unitario\tPrecio Total\n";
 		for(Producto p :  lista){
@@ -171,9 +172,9 @@ public class ClientesActivity extends AppCompatActivity{
 		rv.invalidate();
 		double precioTotal = 0;
 		for(Producto p : carrito){
-			precioTotal += p.getPrecio();
+			precioTotal += p.getPrecio() * carrito.getCantidad(p) ;
 		}
-		((TextView) findViewById(R.id.txtSubtotal)).setText(String.format("$0.00", String.valueOf(precioTotal)));
+		((TextView) findViewById(R.id.txtSubtotal)).setText("$" + String.valueOf(precioTotal));
 	}
 	
 	private void getProductos(){
