@@ -30,4 +30,6 @@
     <string name="logoff">Cerrar sesión</string>
     <string name="recordarme">Recordarme</string>
     <string name="log">Logo</string>
+    <string name="subtotal">Subtotal:</string>
+    <string name="confirmar_pedido">Comprar</string>
 </resources>

@@ -12,8 +12,18 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 public class ClientesActivity extends AppCompatActivity{
 	private static final int ADD_REQUEST = 1;
@@ -38,6 +48,18 @@ public class ClientesActivity extends AppCompatActivity{
 		attachHelper();
 		rv.setVisibility(View.GONE);
 		findViewById(R.id.dummyText).setVisibility(View.GONE);
+		findViewById(R.id.btnComprar).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				try {
+					sendMail(carrito, "damimelamed@gmail.com", getPreferences(MODE_PRIVATE).getString("user", ""));
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				} catch (MessagingException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 	
 	private void attachHelper(){
@@ -120,6 +142,31 @@ public class ClientesActivity extends AppCompatActivity{
 			refresh();
 		}
 	}
+
+	void sendMail(Carrito lista, String toEmail, String user) throws UnsupportedEncodingException, MessagingException {
+		Properties emailProperties = System.getProperties();
+		emailProperties.put("mail.smtp.port", "587");
+		emailProperties.put("mail.smtp.auth", "true");
+		emailProperties.put("mail.smtp.starttls.enable", "true");
+		String emailBody = "Usuario: " + user + "\n\n";
+		emailBody += "Producto\tMarca\tPrecio Unitario\tPrecio Total\n";
+		for(Producto p :  lista){
+			emailBody += p.getNombre() + "\t";
+			emailBody += p.getMarca() + "\t";
+			emailBody += p.getPrecio() + "\t";
+			emailBody += lista.getCantidad(p) + "\n";
+		}
+		Session mailSession = Session.getDefaultInstance(emailProperties, null);
+		MimeMessage emailMessage = new MimeMessage(mailSession);
+		emailMessage.setFrom(new InternetAddress("ventas.sdo.app.1@gmail.com", "ventas.sdo.app.1@gmail.com"));
+		emailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
+		emailMessage.setSubject("Pedido");
+		emailMessage.setText(emailBody);
+		Transport transport = mailSession.getTransport("smtp");
+		transport.connect("smtp.gmail.com", "ventas.sdo.app.1@gmail.com", "appsdo123");
+		transport.sendMessage(emailMessage, emailMessage.getAllRecipients());
+		transport.close();
+	}
 	
 	private void refresh(){
 		if(carrito.size() == 0){
@@ -133,6 +180,11 @@ public class ClientesActivity extends AppCompatActivity{
 		RVAdapter rvAdapter = new RVAdapter(carrito);
 		rv.setAdapter(rvAdapter);
 		rv.invalidate();
+		double precioTotal = 0;
+		for(Producto p : carrito){
+			precioTotal += p.getPrecio();
+		}
+		((TextView) findViewById(R.id.txtSubtotal)).setText(String.format("$0.00", String.valueOf(precioTotal)));
 	}
 	
 	private void getProductos(){
