@@ -54,12 +54,12 @@ public class ClientesActivity extends AppCompatActivity{
 			@Override
 			public void onClick(View view) {
 				Intent i = new Intent(getApplicationContext(),Activity_checkout.class);
+				i.putExtra("eBody",createEmailBody(carrito, getPreferences(MODE_PRIVATE).getString("user", "")));
 				getApplicationContext().startActivity(i);
 				finish();
 			}
 		});
 	}
-	
 	private void attachHelper(){
 		new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.START | ItemTouchHelper.END){
 			@Override
@@ -139,6 +139,18 @@ public class ClientesActivity extends AppCompatActivity{
 			carrito = data.getParcelableExtra("data");
 			refresh();
 		}
+	}
+
+	private String createEmailBody(Carrito lista, String user){
+		String emailBody = "Usuario: " + user + "\n\n";
+		emailBody += "Producto\tMarca\tPrecio Unitario\tPrecio Total\n";
+		for(Producto p :  lista){
+			emailBody += p.getNombre() + "\t";
+			emailBody += p.getMarca() + "\t";
+			emailBody += p.getPrecio() + "\t";
+			emailBody += lista.getCantidad(p) * p.getPrecio() + "\n";
+		}
+		return emailBody;
 	}
 	
 	private void refresh(){
