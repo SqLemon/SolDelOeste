@@ -24,6 +24,7 @@ ext {
     testLibVersion = "0.5"
 }
 
+
 dependencies {
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile "com.android.support.constraint:constraint-layout:1.1.0"

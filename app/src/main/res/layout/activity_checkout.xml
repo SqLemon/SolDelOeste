@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                                            xmlns:tools="http://schemas.android.com/tools"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            tools:context="melamed.soldeloesteapp.Activity_checkout">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:gravity="center_vertical|start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/dummyLayout3">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="Dirección:"
+            android:textSize="20sp"
+            android:textColor="#000000"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"/>
+
+    </LinearLayout>
+
+    <ScrollView
+
+        android:layout_below="@+id/dummyLayout3"
+        android:id="@+id/dummy4"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:textAlignment="textStart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/vistaPedido"
+            android:textColor="#000000"
+            android:padding="16dp"/>
+
+    </ScrollView>
+
+    <Button
+        android:layout_alignBottom="@+id/dummy4"
+        android:id="@+id/btnCheckOut"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="Enviar"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/white"/>
+
+</RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>
