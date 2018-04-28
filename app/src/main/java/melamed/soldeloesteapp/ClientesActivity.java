@@ -48,6 +48,8 @@ public class ClientesActivity extends AppCompatActivity{
 		attachHelper();
 		rv.setVisibility(View.GONE);
 		findViewById(R.id.dummyText).setVisibility(View.GONE);
+		findViewById(R.id.priceLayout).setVisibility(View.GONE);
+		findViewById(R.id.btnComprar).setVisibility(View.GONE);
 		findViewById(R.id.btnComprar).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -171,9 +173,13 @@ public class ClientesActivity extends AppCompatActivity{
 	private void refresh(){
 		if(carrito.size() == 0){
 			rv.setVisibility(View.GONE);
+			findViewById(R.id.priceLayout).setVisibility(View.GONE);
+			findViewById(R.id.btnComprar).setVisibility(View.GONE);
 			findViewById(R.id.dummyText).setVisibility(View.VISIBLE);
 		} else {
 			rv.setVisibility(View.VISIBLE);
+			findViewById(R.id.priceLayout).setVisibility(View.VISIBLE);
+			findViewById(R.id.btnComprar).setVisibility(View.VISIBLE);
 			findViewById(R.id.dummyText).setVisibility(View.GONE);
 		}
 		rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
