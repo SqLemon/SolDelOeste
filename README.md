@@ -11,10 +11,10 @@
 -------------------------------------------------------------------------------------------------
 
 ### Formato de "commits"  :
-Titulo
-+(cosas que mejoraron/agregaron/cambiaron)
-+...
+* [Titulo]
+* [+](cosas que mejoraron/agregaron/cambiaron)
+* [+...]
 
---(si se probó o no)--
-.(si se probó)(cosas que no funcionaron)
-. ...
+* [--](si se probó o no)[--]
+* [.](si se probó)(cosas que no funcionaron)
+* [. ...]
