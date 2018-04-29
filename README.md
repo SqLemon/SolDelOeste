@@ -10,10 +10,11 @@
   
 -------------------------------------------------------------------------------------------------
 
-## Formato de "commits"  :
-**Titulo** /n _+_(cosas que mejoraron/agregaron/cambiaron)  _+_...  _--_(si se probó o no)_--_
-
-_._(si se probó)(cosas que no funcionaron)
-
+## Formato de "commits":  
+**Titulo**  
+*+*(cosas que mejoraron/agregaron/cambiaron)  
+_+_...  
+_--_(si se probó o no)_--_  
+_._(si se probó)(cosas que no funcionaron)  
 _._ ...
 
