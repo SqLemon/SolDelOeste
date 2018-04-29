@@ -11,13 +11,9 @@
 -------------------------------------------------------------------------------------------------
 
 ## Formato de "commits":  
-**Titulo**
-```
+**Titulo**```  
 **+**(cosas que mejoraron/agregaron/cambiaron)  
-**+**...  
-```
-**--**(si se probó o no)_--_  
-```
+**+**...  ```  
+**--**(si se probó o no)_--_  ```
 **.**(si se probó)(cosas que no funcionaron)  
-**.** ...
-```
+**.** ...```
