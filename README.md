@@ -1,5 +1,5 @@
 # Sol del Oeste App
-### Problemas:
+## Problemas:
 * Principal:
   - que no crashee la app cuando manda un mail
   - que se actualice el "subtotal" cuando se modifica la cant en "ClientesActivity"
@@ -10,13 +10,16 @@
   
 -------------------------------------------------------------------------------------------------
 
-### Formato de "commits"  :
-```sh
-Titulo
+## Formato de "commits"  :
+**Titulo**
+
 +(cosas que mejoraron/agregaron/cambiaron)
+
 +...
 
 --(si se probó o no)--
+
 .(si se probó)(cosas que no funcionaron)
+
 . ...
-```
+
