@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">Sol Del Oeste</string>
-    <string name="contrase_a">Contraseña:</string>
+    <string name="contrase_a">Contraseña</string>
     <string name="button">Entrar</string>
-    <string name="usuario">Usuario:</string>
-    <string name="cantidad">Cantidad:</string>
+    <string name="usuario">Usuario</string>
+    <string name="cantidad">Cantidad</string>
     <string name="agregar_uno">Agregar uno</string>
     <string name="quitar_uno">Quitar uno</string>
     <string name="back">back</string>
@@ -32,4 +32,5 @@
     <string name="log">Logo</string>
     <string name="subtotal">Subtotal:</string>
     <string name="confirmar_pedido">Comprar</string>
+    <string name="delete">Deslice a la izquierda un producto para eliminarlo.</string>
 </resources>

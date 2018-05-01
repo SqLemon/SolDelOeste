@@ -26,7 +26,7 @@ class Carrito extends ProductList{
 
     private Carrito(Parcel in){
         super(in);
-        this.carro = in.readHashMap(HashMap.class.getClassLoader());
+        carro = in.readHashMap(HashMap.class.getClassLoader());
     }
     
     double subTotal(){
@@ -36,15 +36,20 @@ class Carrito extends ProductList{
     }
 
     int getCantidad(Producto p) {
-        return this.carro.get(p.getId());
+        return carro.get(p.getId());
     }
 
     boolean add(Producto p, int cantidad) {
         if(!add(p)) return false;
-        this.carro.put(p.getId(), cantidad);
+        carro.put(p.getId(), cantidad);
         return true;
     }
-
+    
+    public void add(int index, Producto p, int cantidad){
+	    carro.put(p.getId(), cantidad);
+        super.add(index, p);
+    }
+    
     void clean(){
         int j = this.size();
         Iterator<Producto> iterator = this.iterator();

@@ -9,15 +9,17 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.util.List;
+
 import melamed.soldeloesteapp.R.id;
 import melamed.soldeloesteapp.R.layout;
 import melamed.soldeloesteapp.RVAdapter.ProductHolder;
 
 class RVAdapter extends Adapter<ProductHolder>{
-    private final Carrito c;
+    private Carrito c;
     private onQuantityChangedListener onQuantityChangedListener;
 	
-	public void setOnQuantityChangedListener(RVAdapter.onQuantityChangedListener onQuantityChangedListener){
+	void setOnQuantityChangedListener(RVAdapter.onQuantityChangedListener onQuantityChangedListener){
 		this.onQuantityChangedListener = onQuantityChangedListener;
 	}
 	
@@ -34,9 +36,25 @@ class RVAdapter extends Adapter<ProductHolder>{
     }
 
     @Override
-    public RVAdapter.ProductHolder onCreateViewHolder(ViewGroup parent, int viewType){
+    public ProductHolder onCreateViewHolder(ViewGroup parent, int viewType){
 	    View v = LayoutInflater.from(parent.getContext()).inflate(layout.product_card, parent, false);
-	    return new RVAdapter.ProductHolder(v);
+	    ProductHolder p = new ProductHolder(v);
+	    return p;
+    }
+    
+    void remove(int position){
+    	c.remove(position);
+    	notifyItemRemoved(position);
+    }
+    
+    public void add(Producto p, int cant, int pos){
+    	c.add(pos, p, cant);
+    	notifyItemInserted(pos);
+    }
+    
+    void changeDataSet(Carrito carrito){
+    	c = carrito;
+    	notifyDataSetChanged();
     }
 
     @Override
@@ -50,24 +68,24 @@ class RVAdapter extends Adapter<ProductHolder>{
 	    holder.btnMinusOne.setOnClickListener(new OnClickListener(){
 		    @Override
 		    public void onClick(View v) {
-		    c.setCantidad(RVAdapter.this.c.get(position), c.getCantidad(c.get(position)) - 1);
+		    c.setCantidad(c.get(position), c.getCantidad(c.get(position)) - 1);
 		    onQuantityChangedListener.onQuantityChanged();
 		    onBindViewHolder(holder, position);
 	    }});
 	    holder.btnPlusOne.setOnClickListener(new OnClickListener(){
 		    @Override
 		    public void onClick(View v) {
-		    c.setCantidad(RVAdapter.this.c.get(position), c.getCantidad(c.get(position)) + 1);
+		    c.setCantidad(c.get(position), c.getCantidad(c.get(position)) + 1);
 		    onQuantityChangedListener.onQuantityChanged();
 		    onBindViewHolder(holder, position);
 	    }});
     }
 
     @Override public int getItemCount(){
-	    return this.c.size();
+	    return c.size();
     }
 	
-	static class ProductHolder extends ViewHolder{
+	static class ProductHolder extends ViewHolder {
 		final TextView lblNombre;
 		final TextView lblMarca;
         final TextView lblCantidad;

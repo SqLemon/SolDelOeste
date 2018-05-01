@@ -25,7 +25,6 @@ public class AddToCartActivity extends AppCompatActivity{
 	private ProductList listaEntera;
 	private AutoCompleteTextView txtProdNombre;
 	private AutoCompleteTextView txtProdMarca;
-	private EditText numProdCant;
 	private TextView lblProdPrecio;
 	
 	@Override
@@ -70,10 +69,11 @@ public class AddToCartActivity extends AppCompatActivity{
 		
 		Toolbar toolbar = findViewById(R.id.toolbar_add2cart);
 		setSupportActionBar(toolbar);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		txtProdNombre = findViewById(R.id.txtProdNombre);
 		txtProdMarca = findViewById(R.id.txtProdMarca);
-		numProdCant = findViewById(R.id.numProdCant);
+		EditText numProdCant = findViewById(R.id.numProdCant);
 		lblProdPrecio = findViewById(R.id.lblProdPrecio);
 
         txtProdNombre.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, listaEntera.getNombres()));
@@ -237,7 +237,6 @@ public class AddToCartActivity extends AppCompatActivity{
 	
 	private void returnToParent(){
 		Intent i = new Intent().putExtra("data", carrito);
-
         setResult(RESULT_OK, i);
         finish();
     }

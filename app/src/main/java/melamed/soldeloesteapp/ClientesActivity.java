@@ -24,7 +24,7 @@ public class ClientesActivity extends AppCompatActivity{
 	private boolean a = false;
 	private boolean b = false;
 	private Menu mMenu;
-	//public String finalList = "";
+	private RVAdapter rvAdapter;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
@@ -45,15 +45,15 @@ public class ClientesActivity extends AppCompatActivity{
 		findViewById(R.id.btnComprar).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				Intent i = new Intent(getApplicationContext(),CheckoutActivity.class);
-				i.putExtra("eBody",createEmailBody(carrito, getPreferences(MODE_PRIVATE).getString("user", "")));
-				getApplicationContext().startActivity(i);
-				finish();
+			Intent i = new Intent(getApplicationContext(),CheckoutActivity.class);
+			i.putExtra("eBody",createEmailBody(carrito, getPreferences(MODE_PRIVATE).getString("user", "")));
+			getApplicationContext().startActivity(i);
+			finish();
 			}
 		});
 	}
 	private void attachHelper(){
-		new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.START | ItemTouchHelper.END){
+		ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.START | ItemTouchHelper.END){
 			@Override
 			public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target){
 				return false;
@@ -61,10 +61,11 @@ public class ClientesActivity extends AppCompatActivity{
 			
 			@Override
 			public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction){
-				int position = viewHolder.getAdapterPosition();
+				final int position = viewHolder.getAdapterPosition();
 				final Producto p = carrito.get(position);
-				carrito.remove(p);
-				refresh();
+				final int cantidad = carrito.getCantidad(p);
+				rvAdapter.remove(position);
+				refreshPrice();
 				Snackbar
 					.make(findViewById(R.id.coordinator), "Eliminado", Snackbar.LENGTH_SHORT)
 					.setAction(
@@ -72,13 +73,14 @@ public class ClientesActivity extends AppCompatActivity{
 						new View.OnClickListener(){
 							@Override
 							public void onClick(View v){
-								carrito.add(p);
-								refresh();
+								rvAdapter.add(p, cantidad, position);
+								refreshPrice();
 							}
 						})
 					.show();
 			}
-		}).attachToRecyclerView(rv);
+		});
+		itemTouchHelper.attachToRecyclerView(rv);
 	}
 	
 	@Override
@@ -94,33 +96,32 @@ public class ClientesActivity extends AppCompatActivity{
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item){
-		int id = item.getItemId();
-		switch(id){
+		switch(item.getItemId()){
 			case R.id.action_add:
 				Intent intent = new Intent(ClientesActivity.this, AddToCartActivity.class);
 				intent.putExtra("cart", carrito);
 				intent.putExtra("list", listaEntera);
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivityForResult(intent, ADD_REQUEST);
 				return true;
 			
 			case R.id.action_delete:
-				carrito = new Carrito();
-				refresh();
+				for(int i = rvAdapter.getItemCount() - 1; i > 0; i--) rvAdapter.remove(i);
+				refreshPrice();
 				return true;
 			
 			case R.id.action_logoff:
 				logoff();
 				break;
 			
-			default:
-				break;
+			default: break;
 		}
 		return super.onOptionsItemSelected(item);
 	}
 	
 	private void logoff(){
 		getPreferences(MODE_PRIVATE).edit().remove("recordar").apply();
-		Intent i = new Intent(getApplicationContext(), LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		Intent i = new Intent(getApplicationContext(), LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 		getApplicationContext().startActivity(i);
 		finish();
 	}
@@ -129,7 +130,8 @@ public class ClientesActivity extends AppCompatActivity{
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
 		if(resultCode == RESULT_OK && requestCode == ADD_REQUEST){
 			carrito = data.getParcelableExtra("data");
-			refresh();
+			rvAdapter.changeDataSet(carrito);
+			refreshPrice();
 		}
 	}
 
@@ -146,6 +148,20 @@ public class ClientesActivity extends AppCompatActivity{
 	}
 	
 	private void refresh(){
+		rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+		rvAdapter = new RVAdapter(carrito);
+		rvAdapter.setOnQuantityChangedListener(new RVAdapter.onQuantityChangedListener(){
+			@Override
+			public void onQuantityChanged(){
+				refreshPrice();
+			}
+		});
+		rv.setAdapter(rvAdapter);
+		rv.invalidate();
+		refreshPrice();
+	}
+	
+	void refreshPrice(){
 		if(carrito.size() == 0){
 			rv.setVisibility(View.GONE);
 			findViewById(R.id.priceLayout).setVisibility(View.GONE);
@@ -156,18 +172,8 @@ public class ClientesActivity extends AppCompatActivity{
 			findViewById(R.id.priceLayout).setVisibility(View.VISIBLE);
 			findViewById(R.id.btnComprar).setVisibility(View.VISIBLE);
 			findViewById(R.id.dummyText).setVisibility(View.GONE);
+			((TextView) findViewById(R.id.txtSubtotal)).setText(CostFormatter.format(carrito.subTotal()));
 		}
-		rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-		RVAdapter rvAdapter = new RVAdapter(carrito);
-		rvAdapter.setOnQuantityChangedListener(new RVAdapter.onQuantityChangedListener(){
-			@Override
-			public void onQuantityChanged(){
-				refresh();
-			}
-		});
-		rv.setAdapter(rvAdapter);
-		rv.invalidate();
-		((TextView) findViewById(R.id.txtSubtotal)).setText(CostFormatter.format(carrito.subTotal()));
 	}
 	
 	private void getProductos(){
