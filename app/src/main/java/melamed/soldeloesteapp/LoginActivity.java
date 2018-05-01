@@ -48,8 +48,9 @@ public class LoginActivity extends AppCompatActivity{
 	    btnLogin.setOnClickListener(new OnClickListener(){
 		    @Override
 		    public void onClick(View v){
-			    login();
-		    }
+		    v.setEnabled(false);
+	        login();
+	    }
 	    });
 	    tryGetCreds();
     }
@@ -86,7 +87,7 @@ public class LoginActivity extends AppCompatActivity{
 		    .putExtra("user", user)
                 .putExtra("pass", pass)
                 .putExtra("mail", mail)
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 		getApplicationContext().startActivity(i);
 		finish();
 	}
@@ -98,17 +99,17 @@ public class LoginActivity extends AppCompatActivity{
 		clase.setOnTaskCompletedListener(new onTaskCompletedListener(){
 			@Override
 			public void onTaskCompleted(Result result){
-				if(result != null)
-					loggedIn(result.getUser(), result.getPass(), result.getMail(), result.getTipo());
-				tilUser.setError("Usuario o contraseña incorrectos");
-				tilPass.setError("Usuario o contraseña incorrectos");
-				progressBar.setVisibility(View.INVISIBLE);
-				tilUser.setEnabled(true);
-				tilPass.setEnabled(true);
-				btnLogin.setEnabled(true);
-				
+			if(result != null){
+				loggedIn(result.getUser(), result.getPass(), result.getMail(), result.getTipo());
+				return;
 			}
-        });
+			tilUser.setError("Usuario o contraseña incorrectos");
+			tilPass.setError("Usuario o contraseña incorrectos");
+			progressBar.setVisibility(View.INVISIBLE);
+			tilUser.setEnabled(true);
+			tilPass.setEnabled(true);
+			btnLogin.setEnabled(true);
+		}});
         try {
 	        tilUser.setEnabled(false);
 	        tilPass.setEnabled(false);

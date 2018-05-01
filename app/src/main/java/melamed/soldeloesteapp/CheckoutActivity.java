@@ -16,7 +16,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-public class Activity_checkout extends AppCompatActivity {
+public class CheckoutActivity extends AppCompatActivity {
     public String emailBody = "";
 
     @Override

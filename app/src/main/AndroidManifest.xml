@@ -36,13 +36,13 @@
             android:theme="@style/AppThemeNoBar" />
         <activity
             android:name=".AddToCartActivity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".ClientesActivity"
-            android:theme="@style/AppThemeNoBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ClientesActivity" />
-        </activity>
-        <activity android:name=".Activity_checkout"></activity>
+            android:theme="@style/AppThemeNoBar" />
+        <activity
+            android:name=".CheckoutActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoBar" />
     </application>
 
 </manifest>

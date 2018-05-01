@@ -22,12 +22,17 @@ class Carrito extends ProductList{
     @SuppressLint("UseSparseArrays")
     private HashMap<Integer, Integer> carro = new HashMap<>();
 
-    Carrito() {
-    }
+    Carrito() {}
 
     private Carrito(Parcel in){
         super(in);
         this.carro = in.readHashMap(HashMap.class.getClassLoader());
+    }
+    
+    double subTotal(){
+    	double subtotal = 0;
+    	for(Producto p : this) subtotal += p.getPrecio() * getCantidad(p);
+    	return subtotal;
     }
 
     int getCantidad(Producto p) {

@@ -24,11 +24,12 @@ ext {
     testLibVersion = "0.5"
 }
 
-
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
+
+    implementation files("libs/javax.mail-api-1.6.1.jar")
+    
     implementation "com.android.support.constraint:constraint-layout:1.1.0"
-    implementation group: 'javax.mail', name: 'javax.mail-api', version: '1.6.1'
     implementation "com.android.support:appcompat-v7:$supportLibVersion"
     implementation "com.android.support:design:$supportLibVersion"
     implementation "com.android.support:cardview-v7:$supportLibVersion"

@@ -15,10 +15,22 @@ import melamed.soldeloesteapp.RVAdapter.ProductHolder;
 
 class RVAdapter extends Adapter<ProductHolder>{
     private final Carrito c;
+    private onQuantityChangedListener onQuantityChangedListener;
+	
+	public void setOnQuantityChangedListener(RVAdapter.onQuantityChangedListener onQuantityChangedListener){
+		this.onQuantityChangedListener = onQuantityChangedListener;
+	}
+	
+	interface onQuantityChangedListener {
+		void onQuantityChanged();
+	}
 
     RVAdapter(Carrito c) {
 	    c.clean();
 	    this.c = c;
+	    onQuantityChangedListener = new onQuantityChangedListener(){
+		    @Override public void onQuantityChanged(){}
+	    };
     }
 
     @Override
@@ -29,30 +41,29 @@ class RVAdapter extends Adapter<ProductHolder>{
 
     @Override
     public void onBindViewHolder(final RVAdapter.ProductHolder holder, final int position){
-	    holder.lblNombre.setText(this.c.get(position).getNombre());
-	    holder.lblMarca.setText(this.c.get(position).getMarca());
-	    int cantidad = this.c.getCantidad(this.c.get(position));
-	    double precio = this.c.get(position).getPrecio() * cantidad;
-	    holder.lblPrecio.setText("$" + String.valueOf(precio));
+	    holder.lblNombre.setText(c.get(position).getNombre());
+	    holder.lblMarca.setText(c.get(position).getMarca());
+	    int cantidad = c.getCantidad(c.get(position));
+	    double precio = c.get(position).getPrecio() * cantidad;
+	    holder.lblPrecio.setText(CostFormatter.format(precio));
 	    holder.lblCantidad.setText(String.valueOf(cantidad));
 	    holder.btnMinusOne.setOnClickListener(new OnClickListener(){
 		    @Override
 		    public void onClick(View v) {
-			    RVAdapter.this.c.setCantidad(RVAdapter.this.c.get(position), RVAdapter.this.c.getCantidad(RVAdapter.this.c.get(position)) - 1);
-			    RVAdapter.this.onBindViewHolder(holder, position);
-		    }
-        });
+		    c.setCantidad(RVAdapter.this.c.get(position), c.getCantidad(c.get(position)) - 1);
+		    onQuantityChangedListener.onQuantityChanged();
+		    onBindViewHolder(holder, position);
+	    }});
 	    holder.btnPlusOne.setOnClickListener(new OnClickListener(){
 		    @Override
 		    public void onClick(View v) {
-			    RVAdapter.this.c.setCantidad(RVAdapter.this.c.get(position), RVAdapter.this.c.getCantidad(RVAdapter.this.c.get(position)) + 1);
-			    RVAdapter.this.onBindViewHolder(holder, position);
-		    }
-        });
+		    c.setCantidad(RVAdapter.this.c.get(position), c.getCantidad(c.get(position)) + 1);
+		    onQuantityChangedListener.onQuantityChanged();
+		    onBindViewHolder(holder, position);
+	    }});
     }
 
-    @Override
-    public int getItemCount(){
+    @Override public int getItemCount(){
 	    return this.c.size();
     }
 	

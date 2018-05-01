@@ -14,16 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
-import java.util.Properties;
-
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 
 public class ClientesActivity extends AppCompatActivity{
 	private static final int ADD_REQUEST = 1;
@@ -54,7 +45,7 @@ public class ClientesActivity extends AppCompatActivity{
 		findViewById(R.id.btnComprar).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				Intent i = new Intent(getApplicationContext(),Activity_checkout.class);
+				Intent i = new Intent(getApplicationContext(),CheckoutActivity.class);
 				i.putExtra("eBody",createEmailBody(carrito, getPreferences(MODE_PRIVATE).getString("user", "")));
 				getApplicationContext().startActivity(i);
 				finish();
@@ -143,15 +134,15 @@ public class ClientesActivity extends AppCompatActivity{
 	}
 
 	public String createEmailBody(Carrito lista, String user){
-		String emailBody = "Usuario: " + user + "\n\n";
-		emailBody += "Producto\tMarca\tPrecio Unitario\tPrecio Total\n";
+		StringBuilder emailBody = new StringBuilder();
+		emailBody.append("Usuario:\t").append(user).append("\n\nProducto\tMarca\tPrecio Unitario\tPrecio Total\n");
 		for(Producto p :  lista){
-			emailBody += p.getNombre() + "\t";
-			emailBody += p.getMarca() + "\t";
-			emailBody += p.getPrecio() + "\t";
-			emailBody += lista.getCantidad(p) * p.getPrecio() + "\n";
+			emailBody.append(p.getNombre()).append('\t');
+			emailBody.append(p.getMarca()).append('\t');
+			emailBody.append(p.getPrecio()).append('\t');
+			emailBody.append(lista.getCantidad(p) * p.getPrecio()).append('\n');
 		}
-		return emailBody;
+		return emailBody.toString();
 	}
 	
 	private void refresh(){
@@ -168,13 +159,15 @@ public class ClientesActivity extends AppCompatActivity{
 		}
 		rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 		RVAdapter rvAdapter = new RVAdapter(carrito);
+		rvAdapter.setOnQuantityChangedListener(new RVAdapter.onQuantityChangedListener(){
+			@Override
+			public void onQuantityChanged(){
+				refresh();
+			}
+		});
 		rv.setAdapter(rvAdapter);
 		rv.invalidate();
-		double precioTotal = 0;
-		for(Producto p : carrito){
-			precioTotal += p.getPrecio() * carrito.getCantidad(p) ;
-		}
-		((TextView) findViewById(R.id.txtSubtotal)).setText("$" + String.valueOf(precioTotal));
+		((TextView) findViewById(R.id.txtSubtotal)).setText(CostFormatter.format(carrito.subTotal()));
 	}
 	
 	private void getProductos(){
